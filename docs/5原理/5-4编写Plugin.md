@@ -83,7 +83,83 @@ compiler.plugin('event-name',function(params) {
 在开发插件时，还需要注意以下两点：
 - 只要能拿到 Compiler 或 Compilation 对象，就能广播出新的事件，所以在新开发的插件中也能广播出事件，给其它插件监听使用。
 - 传给每个插件的 Compiler 和 Compilation 对象都是同一个引用。也就是说在一个插件中修改了 Compiler 或 Compilation 对象上的属性，会影响到后面的插件。
+- 有些事件是异步的，这些事件会附带两个参数，第二个参数为回掉函数，在插件处理完任务时需要调用回掉函数通知 Webpack，才会进入下一处理流程。例如：
+    ```js
+    compiler.plugin('emit',function(compilation, callback) {
+      // 支持处理逻辑
+    
+      // 处理完毕后执行 callback 以通知 Webpack 
+      callback();
+    });
+    ```
 
 
 #### 常用 API
-在开发插件时经常会需要通过调用 Webpack 提供的 API 才能完成一些功能，接下来介绍一些常用的 API。
+插件可以用来修改输出文件、增加输出文件、甚至可以提升 Webpack 性能、等等，总之插件通过调用 Webpack 提供的 API 能完成很多事情。
+由于 Webpack 提供的 API 非常多，有很多 API 很少用的上，又加上篇幅有限，下面来介绍一些常用的 API。
+
+##### 读取输出资源、代码块、模块及其依赖
+有些插件可能需要读取 Webpack 的处理结果，例如输出资源、代码块、模块及其依赖，以便做下一步处理。
+
+在 `emit` 事件发生时，代表源文件的转换和组装已经完成，在这里可以读取到输出资源、代码块、模块及其依赖，并且可以修改输出资源的内容。
+插件代码如下：
+```js
+class Plugin {
+    apply(compiler) {
+        compiler.plugin('emit', function (compilation, callback) {
+            // compilation.chunks 存放所有代码块，是一个数组
+            compilation.chunks.forEach(function (chunk) {
+                // chunk 代表一个代码块
+                // 代码块有多个模块组成，通过 chunk.forEachModule 能读取组成代码块的每个模块
+                chunk.forEachModule(function (module) {
+                    // module 代表一个模块
+                    // module.fileDependencies 存放当前模块的所有依赖的文件路径，是一个数组
+                    module.fileDependencies.forEach(function (filepath) {
+                    });
+                });
+
+                // Webpack 会根据 Chunk 去生成输出的文件资源，每个 Chunk 都对应一个及其以上的输出文件
+                // 例如在 Chunk 中包含了 CSS 模块并且使用了 ExtractTextPlugin 时，该 Chunk 就会生成 .js 和 .css 两个文件
+                chunk.files.forEach(function (filename) {
+                    // compilation.assets 存放当前所有即将输出的资源
+                    // 调用一个输出资源的 source() 方法能获取到输出资源的内容
+                    let source = compilation.assets[filename].source();
+                });
+            });
+
+            // 这是一个异步事件，要记得调用 callback 通知 Webpack 本次事件监听处理结束。
+            // 如果忘记了调用 callback，Webpack 将一直卡在这里而不会往后执行。
+            callback();
+        })
+    }
+}
+```
+
+##### 监听文件变化
+在[4-5使用自动刷新](../4优化/4-5使用自动刷新.md) 中介绍过 Webpack 会从配置的入口模块出发，依次找出所有的依赖模块，当入口模块或者其依赖的模块发生变化时，
+就会触发一次新的 Compilation。
+
+在开发插件时经常需要知道是那个文件发生变化导致了新的 Compilation，为此可以使用如下代码：
+```js
+// 当依赖的文件发生变化时会触发 watch-run 事件
+compiler.plugin('watch-run', (watching, callback) => {
+	// 获取发生变化的文件列表
+	const changedFiles = watching.compiler.watchFileSystem.watcher.mtimes;
+	// changedFiles 格式为键值对，键为发生变化的文件路径。
+	if (changedFiles[filePath] !== undefined) {
+	  // filePath 对应的文件发生了变化
+	}
+	callback();
+});
+```
+
+默认情况下 Webpack 只会监视入口和其依赖的模块是否发生变化，在有些情况下项目可能需要引入新的文件，例如引入一个 HTML 文件。
+由于 JavaScript 文件不会去导入 HTML 文件，Webpack 就不会监听 HTML 文件的变化，编辑 HTML 文件时就不会重新触发新的 Compilation。
+为了监听 HTML 文件的变化，我们需要把 HTML 文件加入到依赖列表中，为此可以使用如下代码：
+```js
+compiler.plugin('after-compile', (compilation, callback) => {
+  // 把 HTML 文件添加到文件依赖列表，好让 Webpack 去监听 HTML 模块文件，在 HTML 模版文件发生变化时重新启动一次编译
+	compilation.fileDependencies.push(options.template);
+	callback();
+});
+```
