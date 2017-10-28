@@ -39,7 +39,7 @@ ga('send', 'pageview');
 </body>
 </html>
 ```
-> HTML 应该是被压缩过的，这里为了方便大家阅读而格式化了 HTML，并且加入了注释
+> HTML 应该是被压缩过的，这里为了方便大家阅读而格式化了 HTML，并且加入了注释。
 
 构建出的目录结构为：
 ````
@@ -126,10 +126,10 @@ module.exports = {
 ```
 以上配置中，大多数都是按照前面已经讲过的内容增加的配置，例如：
 
-- 增加对 CSS 文件的支持，提取出 Chunk 中的 CSS 代码到单独的文件中，压缩 CSS 文件
-- 定义 `NODE_ENV` 环境变量为 `production` 去除代码中的开发时才需要的部分
-- 给输出的文件名称加上 Hash 值
-- 压缩输出的 JavaScript 代码
+- 增加对 CSS 文件的支持，提取出 Chunk 中的 CSS 代码到单独的文件中，压缩 CSS 文件；
+- 定义 `NODE_ENV` 环境变量为 `production` 去除代码中的开发时才需要的部分；
+- 给输出的文件名称加上 Hash 值；
+- 压缩输出的 JavaScript 代码。
 
 但最核心的部分在于 `plugins` 里的：
 ```js
@@ -138,7 +138,7 @@ new WebPlugin({
   filename: 'index.html' // 输出的 HTML 的文件名称
 })
 ```
-其中 `template: './template.html'` 所指的模版的文件 `template.html` 内容是：
+其中 `template: './template.html'` 所指的模版文件 `template.html` 的内容是：
 ```html
 <html>
 <head>

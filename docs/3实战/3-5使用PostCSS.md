@@ -5,6 +5,7 @@
 PostCSS 的用处非常多，包括给 CSS 自动加前缀、使用下一代 CSS 语法等，目前越来越多的人开始用它，它很可能会成为 CSS 预处理器的最终赢家。
 
 > PostCSS 和 CSS 的关系就像 Babel 和 JavaScript 的关系，它们解除了语法上的禁锢，通过插件机制来扩展语言本身，用工程化手段给语言带来了更多的可能性。
+> @TODO PostCSS & SCSS
 
 为了更直观的展示 PostCSS，让我们来看一些例子。
 
@@ -42,7 +43,7 @@ h1 {
 }
 ```
 
-PostCSS 全部采用 JavaScript 编写，即提供了给 JavaScript 代码调用的模块，也提供了可执行的文件。
+PostCSS 全部采用 JavaScript 编写，运行在 Node.js 之上，即提供了给 JavaScript 代码调用的模块，也提供了可执行的文件。
 在 PostCSS 启动时，会从目录下的 `postcss.config.js` 文件中读取所需配置，所以需要新建该文件，文件内容大致如下：
 ```js
 module.exports = {
@@ -53,6 +54,8 @@ module.exports = {
 }
 ```
 其中的 [postcss-cssnext](http://cssnext.io) 插件可以让你使用下一代 CSS 语法编写代码，再通过 PostCSS 转换成目前的浏览器可识别的 CSS，并且该插件还包含给 CSS 自动加前缀的功能。
+
+> @TODO cssnext 优势，可以直接在浏览器中运行
 
 #### 接入 Webpack
 虽然使用 PostCSS 后文件后缀还是 `.css` 但这些文件必须先交给 [postcss-loader](https://github.com/postcss/postcss-loader) 处理一遍后再交给 css-loader。
@@ -82,3 +85,4 @@ npm i -D postcss-cssnext
 
 > 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-5使用PostCSS.zip)
 
+@TODO 集成 Lint

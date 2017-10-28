@@ -131,3 +131,4 @@ module.exports = {
 
 > 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/4-10使用TreeSharking.zip)
 
+@ TODO Tree sharking TypeScript

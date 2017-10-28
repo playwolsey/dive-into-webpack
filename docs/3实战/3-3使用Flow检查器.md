@@ -13,7 +13,7 @@ Flow 使用效果如下：
 function square1(n: number): number {
   return n * n;
 }
-square1('2'); // Error: square 需要传入 number 作为参数
+square1('2'); // Error: square1 需要传入 number 作为参数
 
 // 类型推断检查
 function square2(n) {
@@ -78,12 +78,14 @@ function foo(one, two, three) {}
   "flow"
 ]
 ```
-往源码里加入静态类型后重新构建项目，你会发现新的 Flow 还是能正常在浏览器中运行。
+往源码里加入静态类型后重新构建项目，你会发现采用了 Flow 的源码还是能正常在浏览器中运行。
 
-> 要明确这里 Webpack 构建使用了 Flow 项目的目的只是为了去除源码中的 Flow 静态类型语法，而代码检查和构建无关，许多编辑器已经整合 Flow， 可以实时在代码中高亮指出 Flow 检查出的问题。
+> 要明确构建的目的只是为了去除源码中的 Flow 静态类型语法，而代码检查和构建无关。
+> 许多编辑器已经整合 Flow，可以实时在代码中高亮指出 Flow 检查出的问题。
 
 > 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-3使用Flow检查器.zip)
 
+@TODO 构建时提醒
 
 
 

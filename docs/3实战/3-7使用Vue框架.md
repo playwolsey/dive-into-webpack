@@ -2,7 +2,7 @@
 [Vue](https://cn.vuejs.org) 是一个渐进式的 MVVM 框架，相比于 React、Angular 它更灵活轻量。
 它不会强制性地内置一些功能和语法，你可以根据自己的需要一点点地添加功能。
 虽然采用 Vue 的项目能用可直接运行在浏览器环境里的代码编写，但为了方便编码大多数项目都会采用 Vue 官方的[单文件组件](https://cn.vuejs.org/v2/guide/single-file-components.html#介绍)的写法去编写项目。
-由于直接引用 Vue 是古老和成熟的做法，本书只专注于如何用 Webpack 构建 Vue 单文件组件。
+由于直接引用 Vue 是古老和成熟的做法，本书只专注于讲解如何用 Webpack 构建 Vue 单文件组件。
 
 #### 认识 Vue
 Vue 和 React 一样，它们都推崇组件化和由数据驱动视图的思想，视图和数据绑定在一起，数据改变视图会跟着改变，而无需直接操作视图。
@@ -73,9 +73,10 @@ npm i -D vue-loader css-loader vue-template-compiler
 
 - `vue-loader`：解析和转换 `.vue` 文件，提取出其中的逻辑代码 `script`、样式代码 `style`、以及 HTML 模版 `template`，再分别把它们交给对应的 Loader 去处理。
 - `css-loader`：加载由 `vue-loader` 提取出的 CSS 代码。
-- `vue-template-compiler`：把 `vue-loader` 提取出 HTML 模版编译成对应的可执行的 JavaScript 代码，这和 React 中的 JSX 语法被编译成 JavaScript 代码类似。
+- `vue-template-compiler`：把 `vue-loader` 提取出 HTML 模版编译成对应的可执行的 JavaScript 代码，这和 React 中的 JSX 语法被编译成 JavaScript 代码类似。预先编译好 HTML 模版相对于在浏览器中再去编译 HTML 模版的好处在于性能更好。
 
 重新启动构建你就能看到由 Vue 渲染出的 `Hello,Webpack` 了。
 
 > 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-7使用Vue框架.zip)
 
+@TODO TypeScript+Vue

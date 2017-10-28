@@ -6,7 +6,7 @@ Angular2 相比于 React 和 Vue 来说要复杂很多，这三者的出发点�
 
 - 模块（NgModule）这里的模块不是指 JavaScript 或者其它编程语言里的模块化，而是指 Angular2 里提出的独有的用法。
 - 注解（Decorator）通过注解语法 `@XXX` 来给一个 Class 附加元数据。
-- 服务（Service）按照功能划分，把可以复用的重复代码分装成一个服务以方便给其它模块使用。服务可以通过函数、值等，常见的有日志服务、数据服务、应用程序配置等。
+- 服务（Service）按照功能划分，把可以复用的重复代码分装成一个服务以方便给其它模块使用。服务可以包含函数、常值等，常见的有日志服务、数据服务、应用程序配置等。
 - 依赖注入（Dependency Injection）也叫控制反转（Inversion of Control），是面向对象编程中的一种设计原则，可以用来减低代码之间的耦合度。
 
 Angular2 引入的这些思想都是为了分解和简化大型项目的难度，但对于开发小项目来说这些可能都是累赘，对于初学者来说可能会难以掌握。
@@ -37,8 +37,8 @@ export class AppComponent {
 这个根 NgModule 描述了如何启动应用，代码如下：
 ```typescript
 // 让 Angular2 正常运行需要的 polyfill
-import 'core-js/es6/reflect';
-import 'core-js/es7/reflect';
+import 'core-js/es6/reflect'; @TODO
+import 'core-js/es7/reflect'; @TODO
 import 'zone.js/dist/zone';
 // Angular2 框架核心模块
 import {NgModule} from '@angular/core';
@@ -62,7 +62,7 @@ class AppModule {
 platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 
-Angular2 应用启动后会去解析当前 DOM 树找出名叫 `app-root` 的 HTML 标签，并以这个标签为 Angular2 应用的运行容器，
+Angular2 应用启动后会去解析当前 DOM 树，找出名叫 `app-root` 的 HTML 标签，并以这个标签为 Angular2 应用的运行容器，
 所以还需要改造 `index.html` 加入 `app-root` HTML 标签，代码如下：
 ```html
 <html>
@@ -112,6 +112,6 @@ npm i -S @angular/platform-browser-dynamic @angular/compiler
   ]
 }
 ```
-其它配置保持和在[(3.2 使用 TypeScript 语言](3-2使用TypeScript语言.md)的一样，安装好前面提到的 Angular2 框架依赖的模块后，重新执行构建打开网页，你会看到由 Angular2 渲染出来的 `Hello,Webpack`。
+其它配置保持和在[(3.2 使用 TypeScript 语言](3-2使用TypeScript语言.md)的一致，安装好前面提到的 Angular2 框架依赖的模块后，重新执行构建打开网页，你会看到由 Angular2 渲染出来的 `Hello,Webpack`。
 
 > 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-8使用Angular2框架.zip)

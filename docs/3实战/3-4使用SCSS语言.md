@@ -1,7 +1,7 @@
 ### 使用 SCSS 语言
 
 #### 认识 SCSS
-[SCSS](http://sass-lang.com) 可以让你用程序员的方式写 CSS。
+[SCSS](http://sass-lang.com) 可以让你用更灵活的方式写 CSS。
 它是一种 CSS 预处理器，语法和 CSS 相似，但加入了变量、逻辑、等编程元素，代码类似这样：
 ```scss
 $blue: #1875e7;　
@@ -51,7 +51,7 @@ module.exports = {
 
 1. 通过 sass-loader 把 SCSS 源码转换为 CSS 代码，再把 CSS 代码交给 css-loader 去处理。
 2. css-loader 会找出 CSS 代码中的 `@import` 和 `url()` 这样的导入语句，告诉 Webpack 依赖这些资源。同时还支持 CSS Modules、压缩 CSS 等功能。处理完后再把结果交给 style-loader 去处理。
-3. style-loader 会把 CSS 代码转换成字符串注入到 JavaScript 代码中去，通过 JavaScript 去给 DOM 增加样式。如果你想把 CSS 代码提取到一个单独的文件而不是和 JavaScript 混在一起，可以使用[1-5 使用Plugin](../1入门/1-5使用Plugin.md) 中介绍过的 ExtractTextPlugin。
+3. style-loader 会把 CSS 代码转换成字符串后，注入到 JavaScript 代码中去，通过 JavaScript 去给 DOM 增加样式。如果你想把 CSS 代码提取到一个单独的文件而不是和 JavaScript 混在一起，可以使用[1-5 使用Plugin](../1入门/1-5使用Plugin.md) 中介绍过的 ExtractTextPlugin。
 
 由于接入 sass-loader，项目需要安装这些新的依赖：
 ```bash

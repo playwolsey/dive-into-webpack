@@ -6,7 +6,7 @@
 目前没有任何环境支持运行原生的 TypeScript 代码，必须通过构建把它转换成 JavaScript 代码后才能运行。
 
 改造下前面用过的例子 `Hello,Webpack`，用 TypeScript 重写 JavaScript。由于 TypeScript 是 JavaScript 的超集，直接把后缀 `.js` 改成 `.ts` 是可以的。
-但为了体现出 TypeScript 的不同，我们重写 JavaScript 代码为如下，让它们更 "TypeScript" 点：
+但为了体现出 TypeScript 的不同，我们重写 JavaScript 代码为如下，加入类型检查：
 ```typescript
 // show.ts
 // 操作 DOM 元素，把 content 显示到网页上
@@ -53,7 +53,7 @@ TypeScript 官方提供了能把 TypeScript 转换成 JavaScript 的编译器。
 const path = require('path');
 
 module.exports = {
-  // TS 执行入口文件
+  // 执行入口文件
   entry: './main',
   output: {
     filename: 'bundle.js',
@@ -61,7 +61,7 @@ module.exports = {
   },
   resolve: {
     // 先尝试 ts 后缀的 TypeScript 源码文件
-    extensions: ['.ts', '.js',...[]] 
+    extensions: ['.ts', '.js'] 
   },
   module: {
     rules: [
@@ -79,7 +79,9 @@ module.exports = {
 ```bash
 npm i -D typescript awesome-typescript-loader
 ```
-安装成功后重新执行构建，你将会在 `dist` 目录看到输出的 JavaScript 文件 `bundle.js` 和对应的 Source Map 文件 `bundle.js.map`。
+安装成功后重新执行构建，你将会在 `dist` 目录看到输出的 JavaScript 文件 `bundle.js`，和对应的 Source Map 文件 `bundle.js.map`。
 在浏览器里打开 `index.html` 页面后，来开发工具里可以看到和调试用 TypeScript 编写的源码。
 
 > 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-2使用TypeScript语言.zip)
+
+@TODO tslib，path map
