@@ -154,36 +154,36 @@ module.exports = function(source) {
 };
 ``` 
 
-##### 其它 Loader API
+#### 其它 Loader API
 除了以上提到的在 Loader 中能调用的 Webpack API 外，还存在以下常用 API：
 
-**this.context**：当前处理文件的所在目录，假如当前 Loader 处理的文件是 `/src/main.js`，则 `this.context` 就等于 `/src`。
+- `this.context`：当前处理文件的所在目录，假如当前 Loader 处理的文件是 `/src/main.js`，则 `this.context` 就等于 `/src`。
 
-**this.resource**：当前处理文件的完整请求路径，包括 querystring，例如 `/src/main.js?name=1`。
+- `this.resource`：当前处理文件的完整请求路径，包括 querystring，例如 `/src/main.js?name=1`。
 
-**this.resourcePath**：当前处理文件的路径，例如 `/src/main.js`。
+- `this.resourcePath`：当前处理文件的路径，例如 `/src/main.js`。
 
-**this.resourceQuery**：当前处理文件的 querystring。
+- `this.resourceQuery`：当前处理文件的 querystring。
 
-**this.target**：等于 Webpack 配置中的 Target，详情见 [2-7其它配置项-Target](../2配置/2-7其它配置项.md#Target)。
+- `this.target`：等于 Webpack 配置中的 Target，详情见 [2-7其它配置项-Target](../2配置/2-7其它配置项.md#Target)。
 
-**this.loadModule**：但 Loader 在处理一个文件时，如果依赖其它文件的处理结果才能得出当前文件的结果时，
+- `this.loadModule`：但 Loader 在处理一个文件时，如果依赖其它文件的处理结果才能得出当前文件的结果时，
 就可以通过 `this.loadModule(request: string, callback: function(err, source, sourceMap, module))` 去获得 `request` 对应文件的处理结果。
 
-**this.resolve**：像 `require` 语句一样获得指定文件的完整路径，使用方法为 `resolve(context: string, request: string, callback: function(err, result: string))`。
+- `this.resolve`：像 `require` 语句一样获得指定文件的完整路径，使用方法为 `resolve(context: string, request: string, callback: function(err, result: string))`。
 
-**this.addDependency**：给当前处理文件添加其依赖的文件，以便再其依赖的文件发生变化时，会重新调用 Loader 处理该文件。使用方法为 `addDependency(file: string)`。
+- `this.addDependency`：给当前处理文件添加其依赖的文件，以便再其依赖的文件发生变化时，会重新调用 Loader 处理该文件。使用方法为 `addDependency(file: string)`。
 
-**this.addContextDependency**：和 `addDependency` 类似，但 `addContextDependency` 是把整个目录加入到当前正在处理文件的依赖中。使用方法为 `addContextDependency(directory: string)`。
+- `this.addContextDependency`：和 `addDependency` 类似，但 `addContextDependency` 是把整个目录加入到当前正在处理文件的依赖中。使用方法为 `addContextDependency(directory: string)`。
 
-**this.clearDependencies**：清除当前正在处理文件的所有依赖，使用方法为 `clearDependencies()`。
+- `this.clearDependencies`：清除当前正在处理文件的所有依赖，使用方法为 `clearDependencies()`。
 
-**this.emitFile**：输出一个文件，使用方法为 `emitFile(name: string, content: Buffer|string, sourceMap: {...})`。
+- `this.emitFile`：输出一个文件，使用方法为 `emitFile(name: string, content: Buffer|string, sourceMap: {...})`。
 
 其它没有提到的 API 可以去 [Webpack 官网](https://webpack.js.org/api/loaders/) 查看。 
 
 
-##### 加载本地 Loader
+#### 加载本地 Loader
 在开发 Loader 的过程中，为了测试编写的 Loader 是否能正常工作，需要把它配置到 Webpack 中后，才可能会调用该 Loader。
 在前面的章节中，使用的 Loader 都是通过 Npm 安装的，要使用 Loader 时会直接使用 Loader 的名称，代码如下：
 ```js
@@ -229,3 +229,47 @@ module.exports = {
 }
 ```
 加上以上配置后 Webpack 即会去 `node_modules` 项目下寻找 Loader，也会去 `./loaders/` 目录下寻找。
+
+
+#### 实战
+上面讲了许多理论，接下来从实际出发，来编写一个解决实际问题的 Loader。
+
+该 Loader 名叫 comment-require-loader，作用是把 JavaScript 代码中的注释语法
+```js
+// @require '../style/index.css'
+```
+转换成
+```js
+require('../style/index.css');
+```
+该 Loader 的使用场景是去正确加载针对 [Fis3](http://fis.baidu.com/fis3/docs/user-dev/require.html) 编写的 JavaScript 中通过注释加载 CSS 文件。
+
+该 Loader 的使用方法如下：
+```js
+module.exports = {
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: ['comment-require-loader'],
+        // 针对采用了 fis3 CSS 导入语法的 JavaScript 通过 comment-require-loader 去转换 
+        include: [path.resolve(__dirname, 'node_modules/imui')]
+      }
+    ]
+  }
+};
+```
+
+该 Loader 的实现非常简单，完整代码如下：
+```js
+function replace(source) {
+    // 使用正则把 // @require '../style/index.css' 转换成 require('../style/index.css');  
+    return source.replace(/(\/\/ *@require) +(('|").+('|")).*/, 'require($2);');
+}
+
+module.exports = function (content) {
+    return replace(content);
+};
+```
+
+> 本实例[提供项目完整代码](https://github.com/gwuhaolin/comment-require-loader)
