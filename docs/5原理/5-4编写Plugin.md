@@ -159,7 +159,109 @@ compiler.plugin('watch-run', (watching, callback) => {
 ```js
 compiler.plugin('after-compile', (compilation, callback) => {
   // 把 HTML 文件添加到文件依赖列表，好让 Webpack 去监听 HTML 模块文件，在 HTML 模版文件发生变化时重新启动一次编译
-	compilation.fileDependencies.push(options.template);
+	compilation.fileDependencies.push(filePath);
 	callback();
 });
 ```
+
+##### 修改输出资源
+有些场景下插件需要修改、增加、删除输出的资源，要做到这点需要监听 `emit` 事件，因为发生 `emit` 事件时所有模块的转换和代码块对应的文件已经生成好，
+需要输出的资源即将输出，因此 `emit` 事件是修改 Webpack 输出资源的最后机遇。
+
+所有需要的输出的资源会存放在 `compilation.assets` 中，`compilation.assets` 是一个键值对，键为需要输出的文件名称，值为文件对应的内容。
+
+设置 `compilation.assets` 的代码如下：
+```js
+compiler.plugin('emit', (compilation, callback) => {
+  // 设置名称为 fileName 的输出资源
+  compilation.assets[fileName] = {
+    // 返回文件内容
+  	source: () => {
+      // fileContent 既可以是代表文本文件的字符串，也可以是代表二进制文件的 Buffer
+  		return fileContent;
+  	},
+  	// 返回文件大小
+  	size: () => {
+  		return Buffer.byteLength(fileContent, 'utf8');
+  	}
+  };
+	callback();
+});
+```
+
+读取 `compilation.assets` 的代码如下：
+```js
+compiler.plugin('emit', (compilation, callback) => {
+  // 读取名称为 fileName 的输出资源
+  const asset = compilation.assets[fileName];
+  // 获取输出资源的内容
+  asset.source();
+  // 获取输出资源的文件大小
+  asset.size();
+	callback();
+});
+```
+
+##### 判断 Webpack 使用了哪些插件
+在开发一个插件时可能需要根据当前配置是否使用了其它某个插件而做下一步决定，因此需要读取 Webpack 当前的插件配置情况。
+以判断当前是否使用了 ExtractTextPlugin 为例，代码如下：
+```js
+// 判断当前配置使用使用了 ExtractTextPlugin，compiler 即为 Webpack 在 apply(compiler) 中传入的参数
+function hasExtractTextPlugin(compiler) {
+  // 当前配置所有使用的插件列表
+	const plugins = compiler.options.plugins;
+	// 去 plugins 中寻找有没有 ExtractTextPlugin 的实例
+	return plugins.find(plugin=>plugin.__proto__.constructor === ExtractTextPlugin) != null;
+}
+```
+
+#### 实战
+下面我们举一个实际的例子，带你一步步去实现一个插件。
+
+该插件的名称取名叫 EndWebpackPlugin，作用是在 Webpack 即将退出时再附加一些额外的操作，例如在 Webpack 成功编译和输出了文件后执行发布操作把输出的文件上传到服务器。
+同时该插件还能区分 Webpack 构建是否执行成功。使用该插件时方法如下：
+```js
+module.exports = {
+  plugins:[
+    // 在初始化 EndWebpackPlugin 时传入了两个参数，分别时在成功时的回掉函数和失败时的回掉函数；
+    new EndWebpackPlugin(() => {
+      // Webpack 构建成功，并且文件输出了后会执行到这里，在这里可以做发布文件操作
+    }, (err) => {
+      // Webpack 构建失败，err 时导致错误的原因
+      console.error(err);        
+    })
+  ]
+}
+```
+
+要实现该插件，需要借助两个事件：
+
+- **done**：在成功构建并且输出了文件后，Webpack 即将退出时发生；
+- **failed**：在构建出现异常导致构建失败，Webpack 即将退出时发生；
+
+实现该插件非常简单，完整代码如下：
+```js
+class EndWebpackPlugin {
+
+    constructor(doneCallback, failCallback) {
+        // 存下在构造函数中传入的回掉函数
+        this.doneCallback = doneCallback;
+        this.failCallback = failCallback;
+    }
+
+    apply(compiler) {
+        compiler.plugin('done', (stats) => {
+            // 在 done 事件中回掉 doneCallback
+            this.doneCallback(stats);
+        });
+        compiler.plugin('failed', (err) => {
+            // 在 failed 事件中回掉 failCallback
+            this.failCallback(err);
+        });
+    }
+}
+// 导出插件 
+module.exports = EndWebpackPlugin;
+```
+
+> 本实例[提供项目完整代码](https://github.com/gwuhaolin/end-webpack-plugin)
