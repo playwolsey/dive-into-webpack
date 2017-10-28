@@ -12,8 +12,7 @@
 如何开发、调试 Loader 和 Plugin：
 - [5-3 编写 Loader](5-3编写Loader.md)
 - [5-4 编写 Plugin](5-4编写Plugin.md)
-- [5-5 Webpack API](5-5WebpackAPI.md)
-- [5-6 调试 Webpack](5-6调试Webpack.md)
+- [5-5 调试 Webpack](5-5调试Webpack.md)
 
-[5-7 原理总结](5-7原理总结.md) 对本章做一个总结。
+[5-6 原理总结](5-6原理总结.md) 对本章做一个总结。
 

@@ -70,6 +70,5 @@
 - [5-2 输出文件分析](5原理/5-2输出文件分析.md)
 - [5-3 编写 Loader](5原理/5-3编写Loader.md)
 - [5-4 编写 Plugin](5原理/5-4编写Plugin.md)
-- [5-5 Webpack API](5原理/5-5WebpackAPI.md)
-- [5-6 调试 Webpack](5原理/5-6调试Webpack.md)
-- [5-7 原理总结](5原理/5-7原理总结.md)
+- [5-5 调试 Webpack](5原理/5-5调试Webpack.md)
+- [5-6 原理总结](5原理/5-6原理总结.md)
