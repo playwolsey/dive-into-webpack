@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   // JS 执行入口文件
   entry: {
