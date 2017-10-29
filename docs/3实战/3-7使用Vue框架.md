@@ -77,6 +77,96 @@ npm i -D vue-loader css-loader vue-template-compiler
 
 重新启动构建你就能看到由 Vue 渲染出的 `Hello,Webpack` 了。
 
-> 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-7使用Vue框架.zip)
+> 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-7使用Vue框架Babel.zip)
 
-@TODO TypeScript+Vue
+#### 使用 TypeScript 编写 Vue 应用
+从 Vue 2.5.0+ 版本开始，提供了对 TypeScript 的良好支持，使用 TypeScript 编写 Vue 是一个很好的选择，因为 TypeScript 能检查出一些潜在的错误。
+下面讲解如何用 Webpack 构建使用 TypeScript 编写的 Vue 应用。
+
+用 TypeScript 重写上面的项目，改动如下：
+
+新增 *tsconfig.json* 配置文件，内容如下：
+```json
+{
+  "compilerOptions": {
+    // 构建出 ES5 版本的 JavaScript，与 Vue 的浏览器支持保持一致
+    "target": "es5",
+    // 开启严格模式，这可以对 `this` 上的数据属性进行更严格的推断
+    "strict": true,
+    // 输出的 JavaScript 采用 es2015 模块化，使 Tree Sharking 生效
+    "module": "es2015",
+    "moduleResolution": "node"
+  }
+}
+```
+以上代码中的 ` "module": "es2015"` 是为了 Tree Sharking 优化生效，阅读 [4-10 使用 TreeSharking](../4优化/4-10使用TreeSharking.md) 进一步了解。
+
+修改 *App.vue* 脚本部分内容如下：
+```html
+<!--组件逻辑-->
+<script lang="ts">
+  import Vue from "vue";
+  
+  // 通过 Vue.extend 启用 TypeScript 类型推断
+  export default Vue.extend({
+    data() {
+      return {
+        msg: 'Hello,Webpack',
+      }
+    },
+  });
+</script>
+```
+注意 script 标签中的 `lang="ts"` 是为了指明代码的语法是 TypeScript。
+
+修改 *main.ts* 执行入口文件为如下：
+```typescript
+import Vue from 'vue'
+import App from './App.vue'
+
+new Vue({
+  el: '#app',
+  render: h => h(App)
+});
+```
+由于 TypeScript 不认识 `.vue` 结尾的文件，为了让其支持 `import App from './App.vue'` 导入语句，还需要以下类型定义文件 *vue-shims.d.ts*：
+```typescript
+// 告诉 TypeScript 编译器 .vue 文件其实是一个 Vue  
+declare module "*.vue" {
+  import Vue from "vue";
+  export default Vue;
+}
+```
+
+Webpack 配置需要两个地方，如下：
+```js
+const path = require('path');
+
+module.exports = {
+  resolve: {
+    // 增加对 TypeScript 的 .ts 和 .vue 文件的支持
+    extensions: ['.ts', '.js', '.vue', '.json'],
+  },
+  module: {
+    rules: [
+      // 加载 .ts 文件
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          // 让 tsc 把 vue 文件当成一个 TypeScript 模块去处理，以解决 moudle not found 的问题，tsc 本身不会处理 .vue 结尾的文件
+          appendTsSuffixTo: [/\.vue$/],
+        }
+      },
+    ]
+  },
+};
+```
+
+除此之外还需要按照新引入的依赖：
+```bash
+npm i -D ts-loader typescript 
+```  
+
+> 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-7使用Vue框架TypeScript.zip)
