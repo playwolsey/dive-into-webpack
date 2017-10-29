@@ -19,7 +19,7 @@
 Webpack 已经内置了对动态链接库的支持，需要通过2个内置的插件接入，它们分别是：
 
 - DllPlugin 插件：用于打包出一个个单独的动态链接库文件。
-- DllReferencePlugin 插件：用于在主要配置文件中去引入 DllPlugin 插件打包出的动态链接库文。
+- DllReferencePlugin 插件：用于在主要配置文件中去引入 DllPlugin 插件打包出的动态链接库文件。
 
 下面以基本的 React 项目为例，为其接入 DllPlugin，在开始前先来看下最终构建出的目录结构：
 ```
@@ -208,7 +208,7 @@ module.exports = {
 
 ##### 执行构建
 在修改好以上两个 Webpack 配置文件后，需要重新执行构建。
-重新执行构建时需要注意的是需要先把动态链接库相关的文件编译出来，因为主 Webpack 配置文件中定义的 DllReferencePlugin 依赖这些文件。
+重新执行构建时要注意的是需要先把动态链接库相关的文件编译出来，因为主 Webpack 配置文件中定义的 DllReferencePlugin 依赖这些文件。
 
 执行构建时流程如下：
 
