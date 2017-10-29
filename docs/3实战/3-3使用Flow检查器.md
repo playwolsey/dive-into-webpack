@@ -84,8 +84,3 @@ function foo(one, two, three) {}
 > 许多编辑器已经整合 Flow，可以实时在代码中高亮指出 Flow 检查出的问题。
 
 > 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-3使用Flow检查器.zip)
-
-@TODO 构建时提醒
-
-
-

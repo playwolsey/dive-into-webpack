@@ -39,6 +39,24 @@ TypeScript 官方提供了能把 TypeScript 转换成 JavaScript 的编译器。
 通过 `npm install -g typescript` 安装编译器到全局后，你可以通过 `tsc hello.ts` 命令编译出 `hello.js` 和 `hello.js.map` 文件。
 
 
+#### 减少代码冗余
+TypeScript 编译其会有和在 [3-1 使用ES6语言](3-1使用ES6语言.md)中 Babel 一样的问题：在把 ES6 语法转换成 ES5 语法时需要注入辅助函数，
+为了不让同样的辅助函数重复的出现在多个文件中，可以开启 TypeScript 编译器的 `importHelpers` 选项，修改 `tsconfig.json` 文件如下：
+```json
+{
+  "compilerOptions": {
+    "importHelpers": true
+  }
+}
+```
+该选项的原理和 Babel 中介绍的 `babel-plugin-transform-runtime` 非常类似，会把辅助函数换成如下导入语句：
+```js
+var _tslib = require('tslib');
+_tslib._extend(target); 
+```
+这会导致编译出的代码依赖 `tslib` 这个迷你库，但避免了代码冗余。
+
+
 #### 集成 Webpack
 要让 Webpack 支持 TypeScript，需要解决以下2个问题：
 
@@ -83,5 +101,3 @@ npm i -D typescript awesome-typescript-loader
 在浏览器里打开 `index.html` 页面后，来开发工具里可以看到和调试用 TypeScript 编写的源码。
 
 > 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-2使用TypeScript语言.zip)
-
-@TODO tslib，path map

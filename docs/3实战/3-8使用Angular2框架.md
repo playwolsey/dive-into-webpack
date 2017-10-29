@@ -37,8 +37,8 @@ export class AppComponent {
 这个根 NgModule 描述了如何启动应用，代码如下：
 ```typescript
 // 让 Angular2 正常运行需要的 polyfill
-import 'core-js/es6/reflect'; @TODO
-import 'core-js/es7/reflect'; @TODO
+import 'core-js/es6/reflect';
+import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';
 // Angular2 框架核心模块
 import {NgModule} from '@angular/core';

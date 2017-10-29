@@ -32,10 +32,14 @@
   
 - Webpack 结合其它工具搭配使用，各取所长：
   - [3-16 搭配 Npm Script](3-16搭配NpmScript.md)
+  - [3-17 检查代码](3-17检查代码.md)
+  - [3-18 使用 Webpack Dev Middleware](3-18使用WebpackDevMiddleware.md)
+  - [3-19 通过 Node.js API 启动 Webpack](3-19通过Node.jsAPI启动Webpack.md)
   
 - 用 Webpack 加载特殊类型的资源：
-  - [3-17 加载图片](3-17加载图片.md)  
-  - [3-18 加载SVG](3-18加载SVG.md)  
+  - [3-20 加载图片](3-20加载图片.md)  
+  - [3-21 加载SVG](3-21加载SVG.md)
+  - [3-22 加载 Source Map](3-22加载SourceMap.md)
   
-- [3-19 实战总结](3-19实战总结.md)
+- [3-23 实战总结](3-23实战总结.md)
   
