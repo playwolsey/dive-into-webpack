@@ -25,63 +25,59 @@ Webpack 支持为转换生成的代码输出对应的 Source Map 文件，以方
 - source-map：生成独立的 Source Map 文件；
 - hidden：不在 JavaScript 文件中指出 Source Map 文件所在，这样浏览器就不会自动加载 Source Map；
 - inline：把生成的 Source Map 转换成 base64 格式内嵌在 JavaScript 文件中；
-- cheap：生成的 Source Map 中不会包含列信息，这样计算量更小，输出的 Source Map 文件更小；
-- module：
+- cheap：生成的 Source Map 中不会包含列信息，这样计算量更小，输出的 Source Map 文件更小；同时来自 Loader 的 Source Map 不会使用；
+- module：来自 Loader 的 Source Map 被简单处理成每行一个模块；
 
 以上的介绍很抽象，你可能无法明白其含义，让我们来看看不同模式下的具体输出。
 
 
-##### eval
-以下是一个简单的模块对应的输出代码：
-```js
-function(module, exports) {
-  eval("console.log('Hello world');\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/index.js\n// module id = ./app/index.js\n// module chunks = 1\n\n//# sourceURL=webpack:///./app/index.js?")
-}
-```
-模块的具体内容被 `eval` 包裹，代码加载后会通过执行 `eval` 语句安装模块。
-
-##### cheap-eval-source-map
-```js
-function(module, exports) {
-  eval("console.log('Hello world');//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9hcHAvaW5kZXguanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9hcHAvaW5kZXguanM/MGUwNCJdLCJzb3VyY2VzQ29udGVudCI6WyJjb25zb2xlLmxvZygnSGVsbG8gd29ybGQnKTtcblxuXG4vLy8vLy8vLy8vLy8vLy8vLy9cbi8vIFdFQlBBQ0sgRk9PVEVSXG4vLyAuL2FwcC9pbmRleC5qc1xuLy8gbW9kdWxlIGlkID0gLi9hcHAvaW5kZXguanNcbi8vIG1vZHVsZSBjaHVua3MgPSAxIl0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==")
-}
-```
- 
-
-source-map：
-```js
-//# sourceMappingURL=bundle.js.map
-```
-
-bundle.js.map
-```json
-{
-  "version": 3,
-  "sources": [
-    "webpack:///webpack/bootstrap 9f2430d1b6cb7a7049be",
-    "webpack:///./main.js",
-    "webpack:///./show.js"
-  ],
-  "names": [],
-  "mappings": ";AAAA;AACA;;AAEA;AACA;;AAEA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;;AAEA;AACA;;AAEA;AACA;;AAEA;AACA;AACA;;;AAGA;AACA;;AAEA;AACA;;AAEA;AACA;AACA;AACA;AACA;AACA;AACA;AACA,aAAK;AACL;AACA;;AAEA;AACA;AACA;AACA,mCAA2B,0BAA0B,EAAE;AACvD,yCAAiC,eAAe;AAChD;AACA;AACA;;AAEA;AACA,8DAAsD,+DAA+D;;AAErH;AACA;;AAEA;AACA;;;;;;;AC7DA;AACA;AACA;AACA,gB;;;;;;ACHA;AACA;AACA;AACA;;AAEA;AACA",
-  "file": "bundle.js",
-  "sourcesContent": [
-    " \t// The module cache\n \tvar installedModules = {};\n\n \t// The require function\n \tfunction __webpack_require__(moduleId) {\n\n \t\t// Check if module is in cache\n \t\tif(installedModules[moduleId]) {\n \t\t\treturn installedModules[moduleId].exports;\n \t\t}\n \t\t// Create a new module (and put it into the cache)\n \t\tvar module = installedModules[moduleId] = {\n \t\t\ti: moduleId,\n \t\t\tl: false,\n \t\t\texports: {}\n \t\t};\n\n \t\t// Execute the module function\n \t\tmodules[moduleId].call(module.exports, module, module.exports, __webpack_require__);\n\n \t\t// Flag the module as loaded\n \t\tmodule.l = true;\n\n \t\t// Return the exports of the module\n \t\treturn module.exports;\n \t}\n\n\n \t// expose the modules object (__webpack_modules__)\n \t__webpack_require__.m = modules;\n\n \t// expose the module cache\n \t__webpack_require__.c = installedModules;\n\n \t// define getter function for harmony exports\n \t__webpack_require__.d = function(exports, name, getter) {\n \t\tif(!__webpack_require__.o(exports, name)) {\n \t\t\tObject.defineProperty(exports, name, {\n \t\t\t\tconfigurable: false,\n \t\t\t\tenumerable: true,\n \t\t\t\tget: getter\n \t\t\t});\n \t\t}\n \t};\n\n \t// getDefaultExport function for compatibility with non-harmony modules\n \t__webpack_require__.n = function(module) {\n \t\tvar getter = module && module.__esModule ?\n \t\t\tfunction getDefault() { return module['default']; } :\n \t\t\tfunction getModuleExports() { return module; };\n \t\t__webpack_require__.d(getter, 'a', getter);\n \t\treturn getter;\n \t};\n\n \t// Object.prototype.hasOwnProperty.call\n \t__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };\n\n \t// __webpack_public_path__\n \t__webpack_require__.p = \"\";\n\n \t// Load entry module and return exports\n \treturn __webpack_require__(__webpack_require__.s = 0);\n\n\n\n// WEBPACK FOOTER //\n// webpack/bootstrap 9f2430d1b6cb7a7049be",
-    "// 通过 CommonJS 规范导入 show 函数\nconst show = require('./show.js');\n// 执行 show 函数\nshow('Webpack');\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./main.js\n// module id = 0\n// module chunks = 0",
-    "// 操作 DOM 元素，把 content 显示到网页上\nfunction show(content) {\n  window.document.getElementById('app').innerText = 'Hello,' + content;\n}\n\n// 通过 CommonJS 规范导出 show 函数\nmodule.exports = show;\n\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./show.js\n// module id = 1\n// module chunks = 0"
-  ],
-  "sourceRoot": ""
-}
-```
-
-#### Devtool 的区别
+#### 该如何选择
 一个简单的 Devtool 配置项，提供了这么多选项，但很多人搞不清楚它们之间的差别和应用场景。
 
-如果你不关心细节和性能，只是想方便调试源码，可以直接设置成 `source-map`，但这样会造成两个问题：
+如果你不关心细节和性能，只是想在不出任何差错的情况下调试源码，可以直接设置成 `source-map`，但这样会造成两个问题：
 
 - `source-map` 模式下会输出质量最高最详细的 Source Map，这会造成构建速度缓慢，特别是在开发过程需要频繁修改的时候会增加等待时间；
 - `source-map` 模式下会把 Source Map 暴露出去，如果构建发布到线上的代码的 Source Map 暴露出去就等于源码被泄露；
 
-为了  
+为了解决以上两个问题，可以这样做：
 
-@TODO https://juejin.im/post/58293502a0bb9f005767ba2f
+- 在开发环境下把 `devtool` 设置成 `cheap-module-eval-source-map`，因为生成这种 Source Map 的速度最快，能加速构建。在开发环境下不会做代码压缩即，Source Map 中即使没有列信息也不会影响断点调试；
+- 在生产环境下把 `devtool` 设置成 `hidden-source-map`，意思是生成最详细的 Source Map，但不会把 Source Map 暴露出去。由于在生产环境下会做代码压缩，一个 JavaScript 文件只有一行，所以需要列信息。
+
+> 在生产环境下通常不会把 Source Map 上传到 HTTP 服务器让用户获取，而是上传到 JavaScript 错误收集系统，在错误收集系统上根据 Source Map 和收集到的 JavaScript 运行错误堆栈技术出错误所在源码的位置。
+> 
+> 不要在生产环境下使用 `inline` 模式的 Source Map， 因为这会使 JavaScript 文件变得很大。 
+
+
+#### 加载现有的 Source Map
+有些从 Npm 安装的第三方模块是采用 ES6 或者 TypeScript 编写的，它们在发布时会同时带上编译出来的 JavaScript 文件和对应的 Source Map 文件，以方便你在使用它们出问题的时候调试它们；
+
+默认情况下 Webpack 是不会去加载这些附加的 Source Map 文件的，Webpack 只会在转换过程中生成 Source Map。
+为了让 Webpack 加载这些附加的 Source Map 文件，需要安装 [source-map-loader](https://github.com/webpack-contrib/source-map-loader) 。
+使用方法如下：
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        // 只加载你关心的目录下的 Source Map，以提升构建速度
+        include: [path.resolve(root, 'node_modules/some-components/')],
+        use: ['source-map-loader'],
+        // 要把 source-map-loader 的执行顺序放到最前面，如果在 source-map-loader 之前有 Loader 转换了该 JavaScript 文件，会导致 Source Map 映射错误
+        enforce: 'pre'
+      }
+    ]
+  }
+};
+```
+
+> 由于 source-map-loader 在加载 Source Map 时计算量很大，因此要避免让该 Loader 处理过多的文件，不然会导致构建速度缓慢。
+> 通常会采用 `include` 去命中只关心的文件。
+
+再安装新引入的依赖：
+```bash
+npm i -D source-map-loader
+```
+
+重启 Webpack 后，你就能在浏览器中调试 `node_modules/some-components/` 目录下的源码了。
