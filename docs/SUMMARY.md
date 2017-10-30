@@ -41,7 +41,7 @@
   - [3-14 构建离线应用](3实战/3-14构建离线应用.md)
   - [*3-15 构建 React Native 应用](3实战/3-15构建ReactNative应用.md)
   - [3-16 搭配 Npm Script](3实战/3-16搭配NpmScript.md)
-  - [*3-17 检查代码](3实战/3-17检查代码.md)
+  - [3-17 检查代码](3实战/3-17检查代码.md)
   - [*3-18 使用 Webpack Dev Middleware](3实战/3-18使用WebpackDevMiddleware.md)
   - [*3-19 通过 Node.js API 启动 Webpack](3实战/3-19通过Node.jsAPI启动Webpack.md)
   - [3-17 加载图片](3实战/3-20加载图片.md)
