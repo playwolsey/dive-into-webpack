@@ -46,7 +46,7 @@
   - [*3-19 通过 Node.js API 启动 Webpack](3实战/3-19通过Node.jsAPI启动Webpack.md)
   - [3-17 加载图片](3实战/3-20加载图片.md)
   - [3-18 加载SVG](3实战/3-21加载SVG.md)
-  - [*3-22 加载 Source Map](3实战/3-22加载SourceMap.md) 
+  - [3-22 加载 Source Map](3实战/3-22加载SourceMap.md) 
   - [3-19 实战总结](3实战/3-23实战总结.md)
 
 - [第4章 优化](4优化/README.md)
