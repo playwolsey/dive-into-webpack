@@ -8,6 +8,7 @@
 
 1. 条件匹配：通过 `test` 、 `include` 、 `exclude` 三个配置项来命中 Loader 要应用规则的文件。
 2. 应用规则：对选中后的文件通过 `use` 配置项来应用 Loader，可以只应用一个 Loader 或者按照从后往前的顺序应用一组 Loader，同时还可以分别给 Loader 传入参数。
+3. 重置顺序：一组 Loader 的执行顺序默认是从右到左执行，通过 `enforce` 选项可以让其中一个 Loader 的执行顺序放到最前或者最后。
 
 下面来通过一个例子来说明具体使用方法：
 ```js
@@ -47,9 +48,12 @@ use: [
     loader:'babel-loader',
     options:{
       cacheDirectory:true,
-    }
+    },
+    // enforce:'post' 的含义是把该 Loader 的执行顺序放到最后
+    // enforce 的值还可以是：代表把 Loader 的执行顺序放到最前的 pre
+    enforce:'post'
   },
-  ...[]
+  // 省略其它 Loader
 ]
 ```
 
