@@ -2,6 +2,10 @@
 本书按照入门、配置、实战、优化、原理的路线层层深入，涵盖了 Webpack 的方方面面。
 对于小白，本书可以作为 Webpack 入门教程，对于老手，本书可以进一步加深你对 Webpack 的理解。
 
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/3bvxELAxnq8r4wheFyRkED8U/gwuhaolin/dive-into-webpack'>
+  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/3bvxELAxnq8r4wheFyRkED8U/gwuhaolin/dive-into-webpack.svg' />
+</a>
+
 (本书正在书写中，还未完成...)
 
 ## 版权许可
