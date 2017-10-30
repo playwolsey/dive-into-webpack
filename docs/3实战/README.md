@@ -33,8 +33,8 @@
 - Webpack 结合其它工具搭配使用，各取所长：
   - [3-16 搭配 Npm Script](3-16搭配NpmScript.md)
   - [3-17 检查代码](3-17检查代码.md)
-  - [3-18 使用 Webpack Dev Middleware](3-18使用WebpackDevMiddleware.md)
-  - [3-19 通过 Node.js API 启动 Webpack](3-19通过Node.jsAPI启动Webpack.md)
+  - [3-18 通过 Node.js API 启动 Webpack](3-18通过Node.jsAPI启动Webpack.md)
+  - [3-19 使用 Webpack Dev Middleware](3-19使用WebpackDevMiddleware.md)
   
 - 用 Webpack 加载特殊类型的资源：
   - [3-20 加载图片](3-20加载图片.md)  

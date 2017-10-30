@@ -58,4 +58,4 @@ watching.close(()=>{
 ```
 其中的 watchOptions 就是在 [2-7 其它配置项](../2配置/2-7其它配置项.md) 中介绍过的 *Watch 和 WatchOptions*。
 
-> 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-19通过Node.jsAPI启动Webpack.zip)
+> 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-18通过Node.jsAPI启动Webpack.zip)
