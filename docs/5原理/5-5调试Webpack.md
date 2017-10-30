@@ -20,12 +20,12 @@ Webstorm 集成了 Node.js 的调试工具，因此使用 Webstorm 调试 Webpac
 
 以上配置中有三点需要注意：
 
-- `Name` 设置成了 *debug webpack*，就像设置了一个别名，方便记忆和区分；
+- `Name` 设置成了 `debug webpack`，就像设置了一个别名，方便记忆和区分；
 - `Working directory` 设置为需要调试的插件所在的项目的根目录；
 - `JavaScript file` 即 Node.js 的执行入口文件，设置为 Webpack 的执行入口文件 `node_modules/webpack/bin/webpack.js`。
 
 ##### 3. 启动调试
-经过以上两步，准备工作已经完成，下面启动调试，启动时选中前面设置的 *debug webpack*，方法如图
+经过以上两步，准备工作已经完成，下面启动调试，启动时选中前面设置的 `debug webpack`，方法如图
 
 ![图5-5-3 启动 Webpack](img/5-5启动Webpack.png)
 

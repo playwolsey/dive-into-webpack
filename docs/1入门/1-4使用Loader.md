@@ -55,9 +55,9 @@ npm i -D style-loader css-loader
 安装成功后重新执行构建时，你会发现 `bundle.js` 文件被更新了，里面注入了在 `main.css` 中写的 CSS，而不是会额外生成一个 CSS 文件。
 但是重新刷新 `index.html` 网页时将会发现 `Hello,Webpack` 居中了，样式生效了！
 也许你会对此感到奇怪，第一次看到 CSS 被写在了 JavaScript 里！这其实都是 `style-loader` 的功劳，它的工作原理大概是把 CSS 内容用 JavaScript 里的字符串存储起来，在页面 JavaScript 执行后通过 DOM 操作动态地往 `HTML head` 标签里插入 `HTML style` 标签。
-也许你认为这样做会导致 JavaScript 文件变大并导致加载网页时间变长，想让 Webpack 单独输出 CSS 文件。下一节[1-5 使用Plugin](1-5使用Plugin.md)将教你如何通过 Webpack Plugin 机制来实现。
+也许你认为这样做会导致 JavaScript 文件变大并导致加载网页时间变长，想让 Webpack 单独输出 CSS 文件。下一节 [1-5 使用Plugin](1-5使用Plugin.md) 将教你如何通过 Webpack Plugin 机制来实现。
 
-> 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/1-4使用Loader.zip)
+> 本实例 [提供项目完整代码](http://webpack.wuhaolin.cn/1-4使用Loader.zip)
 
 给 Loader 传入属性的方式除了有 querystring 外，还可以通过 Object 传入，以上的 Loader 配置可以修改为如下：
 ```js

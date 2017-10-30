@@ -85,7 +85,7 @@ npm i -D vue-loader css-loader vue-template-compiler
 
 用 TypeScript 重写上面的项目，改动如下：
 
-新增 *tsconfig.json* 配置文件，内容如下：
+新增 `tsconfig.json` 配置文件，内容如下：
 ```json
 {
   "compilerOptions": {
@@ -101,7 +101,7 @@ npm i -D vue-loader css-loader vue-template-compiler
 ```
 以上代码中的 ` "module": "es2015"` 是为了 Tree Sharking 优化生效，阅读 [4-10 使用 TreeSharking](../4优化/4-10使用TreeSharking.md) 进一步了解。
 
-修改 *App.vue* 脚本部分内容如下：
+修改 `App.vue` 脚本部分内容如下：
 ```html
 <!--组件逻辑-->
 <script lang="ts">
@@ -119,7 +119,7 @@ npm i -D vue-loader css-loader vue-template-compiler
 ```
 注意 script 标签中的 `lang="ts"` 是为了指明代码的语法是 TypeScript。
 
-修改 *main.ts* 执行入口文件为如下：
+修改 `main.ts` 执行入口文件为如下：
 ```typescript
 import Vue from 'vue'
 import App from './App.vue'
@@ -129,7 +129,7 @@ new Vue({
   render: h => h(App)
 });
 ```
-由于 TypeScript 不认识 `.vue` 结尾的文件，为了让其支持 `import App from './App.vue'` 导入语句，还需要以下类型定义文件 *vue-shims.d.ts*：
+由于 TypeScript 不认识 `.vue` 结尾的文件，为了让其支持 `import App from './App.vue'` 导入语句，还需要以下类型定义文件 `vue-shims.d.ts`：
 ```typescript
 // 告诉 TypeScript 编译器 .vue 文件其实是一个 Vue  
 declare module "*.vue" {
