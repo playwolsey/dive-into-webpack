@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "gitbook": "^3.2.3",
   "scripts": {
-    "build": "gitbook build"
+    "book": "gitbook build",
+    "build": "node build.js"
   }
 }
