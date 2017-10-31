@@ -41,6 +41,10 @@ app.use(webpackMiddleware(compiler, {
     
     // 只有 publicPath 属性为必填，其它都是选填项
     
+    // Webpack 输出资源绑定在 HTTP 服务器上的根目录，
+    // 和 Webpack 配置中的 publicPath 含义一致 
+    publicPath: '/assets/',
+        
     // 不输出 info 类型的日志到控制台，只输出 warn 和 error 类型的日志
     noInfo: false,
     
@@ -57,19 +61,15 @@ app.use(webpackMiddleware(compiler, {
         aggregateTimeout: 300,
         poll: true
     },
-    
-    // Webpack 输出资源绑定在 HTTP 服务器上的根目录，
-    // 和 Webpack 配置中的 publicPath 含义一致 
-    publicPath: "/assets/",
-    
-    // 默认的 URL 路径, 默认是 "index.html".
-    index: "index.html",
+       
+    // 默认的 URL 路径, 默认是 'index.html'.
+    index: 'index.html',
     
     // 自定义 HTTP 头
-    headers: {"X-Custom-Header": "yes"},
+    headers: {'X-Custom-Header': 'yes'},
     
     // 给特定文件后缀的文件添加 HTTP mimeTypes 文件类型头映射
-    mimeTypes: {"text/html": ["phtml"]},
+    mimeTypes: {'text/html': ['phtml']},
     
     // 统计信息输出样式
     stats: {
@@ -84,4 +84,74 @@ app.use(webpackMiddleware(compiler, {
 }));
 ```
 
- 
+#### Webpack Dev Middleware 与模块热替换
+DevServer 提供了一个方便的功能，可以做到在监听到文件发生变化时自动替换网页中的老模块，以做到实时预览。
+DevServer 虽然是基于 webpack-dev-middleware 实现的，但 webpack-dev-middleware 并没有实现模块热替换功能，而是 DevServer 自己实现了该功能。
+
+为了在使用 webpack-dev-middleware 时也能使用模块热替换功能去提升开发效率，需要额外的再接入 [webpack-hot-middleware](https://github.com/glenjamin/webpack-hot-middleware)。
+需要做以下修改才能实现模块热替换。
+
+1. 修改 `webpack.config.js` 文件，加入 `HotModuleReplacementPlugin` 插件，修改如下：
+```js
+const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
+
+module.exports = {
+  entry: [
+    // 为了支持模块热替换，注入代理客户端
+    'webpack-hot-middleware/client',
+    // JS 执行入口文件
+    './src/main.js'
+  ],
+  output: {
+    // 把所有依赖的模块合并输出到一个 bundle.js 文件
+    filename: 'bundle.js',
+  },
+  plugins: [
+    // 为了支持模块热替换，生成 .hot-update.json 文件
+    new HotModuleReplacementPlugin(),
+  ],
+  devtool: 'source-map',
+};
+``` 
+该修改其实就是相当于完成了在 [4-6 开启模块热替换](../4优化/4-6开启模块热替换.md) 中提到的 `webpack-dev-server --hot` 的工作。
+
+2. 修改 HTTP 服务器代码 `server.js` 文件，接入 `webpack-hot-middleware` 中间件，修改如下：
+```js
+const express = require('express');
+const webpack = require('webpack');
+const webpackMiddleware = require('webpack-dev-middleware');
+
+// 从 webpack.config.js 文件中读取 Webpack 配置
+const config = require('./webpack.config.js');
+// 实例化一个 Expressjs app
+const app = express();
+
+// 用读取到的 Webpack 配置实例化一个 Compiler
+const compiler = webpack(config);
+// 给 app 注册 webpackMiddleware 中间件
+app.use(webpackMiddleware(compiler));
+// 为了支持模块热替换
+app.use(require('webpack-hot-middleware')(compiler));
+// 把项目根目录作为静态资源目录，用于服务 HTML 文件
+app.use(express.static('.'));
+// 启动 HTTP 服务器，监听在 3000 端口
+app.listen(3000, () => {
+  console.info('成功监听在 3000');
+});
+```
+
+3. 修改网页执行入口文件 `main.js`，加入替换逻辑，在文件默认加入以下代码：
+```js
+if (module.hot) {
+  module.hot.accept();
+}
+```
+
+4. 安装新引入的依赖：
+```bash
+npm i -D webpack-dev-middleware webpack-hot-middleware express
+```
+
+安装成功后，通过 `node ./server.js` 就能启动一个类似于支持模块热替换的服务了。
+
+> 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-19使用WebpackDevMiddleware.zip)

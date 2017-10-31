@@ -43,7 +43,7 @@
   - [3-16 搭配 Npm Script](3实战/3-16搭配NpmScript.md)
   - [3-17 检查代码](3实战/3-17检查代码.md)
   - [3-18 通过 Node.js API 启动 Webpack](3实战/3-18通过Node.jsAPI启动Webpack.md)
-  - [*3-19 使用 Webpack Dev Middleware](3实战/3-19使用WebpackDevMiddleware.md)
+  - [3-19 使用 Webpack Dev Middleware](3实战/3-19使用WebpackDevMiddleware.md)
   - [3-17 加载图片](3实战/3-20加载图片.md)
   - [3-18 加载SVG](3实战/3-21加载SVG.md)
   - [3-22 加载 Source Map](3实战/3-22加载SourceMap.md) 
