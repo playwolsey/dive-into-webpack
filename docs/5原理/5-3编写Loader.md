@@ -129,7 +129,7 @@ module.exports = function(source) {
 
 ### 处理二进制数据
 在默认的情况下，Webpack 传给 Loader 的原内容都是 UTF-8 格式编码的字符串。
-但有些场景下 Loader 不是处理文本文件的，而是处理二进制文件的，例如 file-loader，就需要 Webpack 给 Loader 传入二进制格式的数据。
+但有些场景下 Loader 不是处理文本文件，而是处理二进制文件，例如 file-loader，就需要 Webpack 给 Loader 传入二进制格式的数据。
 为此，你需要这样编写 Loader：
 ```js
 module.exports = function(source) {
@@ -142,6 +142,7 @@ module.exports = function(source) {
 // 通过 exports.raw 属性告诉 Webpack 该 Loader 是否需要二进制数据 
 module.exports.raw = true;
 ```
+以上代码中最关键的代码是最后一行 `module.exports.raw = true;`，没有该行 Loader 只能拿到字符串。
 
 ### 缓存加速
 在有些情况下，有些转换操作需要大量计算非常耗时，如果每次构建都重新执行重复的转换操作，构建将会变得非常缓慢。
