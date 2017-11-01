@@ -77,7 +77,6 @@ compiler.plugin('event-name',function(params) {
 同理，compilation.apply 和 compilation.plugin 使用方法和上面一致。
 
 在开发插件时，你可能会不知道该如何下手，因为你不知道该监听哪个事件才能完成任务。
-在[5-1工作原理概括](5-1工作原理概括.md)中详细介绍过 Webpack 在运行过程中广播出常用事件，你可以从中找到你需要的事件。
 
 在开发插件时，还需要注意以下两点：
 - 只要能拿到 Compiler 或 Compilation 对象，就能广播出新的事件，所以在新开发的插件中也能广播出事件，给其它插件监听使用。
@@ -119,7 +118,8 @@ class Plugin {
         });
 
         // Webpack 会根据 Chunk 去生成输出的文件资源，每个 Chunk 都对应一个及其以上的输出文件
-        // 例如在 Chunk 中包含了 CSS 模块并且使用了 ExtractTextPlugin 时，该 Chunk 就会生成 .js 和 .css 两个文件
+        // 例如在 Chunk 中包含了 CSS 模块并且使用了 ExtractTextPlugin 时，
+        // 该 Chunk 就会生成 .js 和 .css 两个文件
         chunk.files.forEach(function (filename) {
           // compilation.assets 存放当前所有即将输出的资源
           // 调用一个输出资源的 source() 方法能获取到输出资源的内容
@@ -139,7 +139,7 @@ class Plugin {
 在[4-5使用自动刷新](../4优化/4-5使用自动刷新.md) 中介绍过 Webpack 会从配置的入口模块出发，依次找出所有的依赖模块，当入口模块或者其依赖的模块发生变化时，
 就会触发一次新的 Compilation。
 
-在开发插件时经常需要知道是那个文件发生变化导致了新的 Compilation，为此可以使用如下代码：
+在开发插件时经常需要知道是哪个文件发生变化导致了新的 Compilation，为此可以使用如下代码：
 ```js
 // 当依赖的文件发生变化时会触发 watch-run 事件
 compiler.plugin('watch-run', (watching, callback) => {
@@ -166,9 +166,9 @@ compiler.plugin('after-compile', (compilation, callback) => {
 
 ### 修改输出资源
 有些场景下插件需要修改、增加、删除输出的资源，要做到这点需要监听 `emit` 事件，因为发生 `emit` 事件时所有模块的转换和代码块对应的文件已经生成好，
-需要输出的资源即将输出，因此 `emit` 事件是修改 Webpack 输出资源的最后机遇。
+需要输出的资源即将输出，因此 `emit` 事件是修改 Webpack 输出资源的最后时机。
 
-所有需要的输出的资源会存放在 `compilation.assets` 中，`compilation.assets` 是一个键值对，键为需要输出的文件名称，值为文件对应的内容。
+所有需要输出的资源会存放在 `compilation.assets` 中，`compilation.assets` 是一个键值对，键为需要输出的文件名称，值为文件对应的内容。
 
 设置 `compilation.assets` 的代码如下：
 ```js
@@ -176,16 +176,16 @@ compiler.plugin('emit', (compilation, callback) => {
   // 设置名称为 fileName 的输出资源
   compilation.assets[fileName] = {
     // 返回文件内容
-  	source: () => {
+    source: () => {
       // fileContent 既可以是代表文本文件的字符串，也可以是代表二进制文件的 Buffer
-  		return fileContent;
+      return fileContent;
   	},
-  	// 返回文件大小
+    // 返回文件大小
   	size: () => {
-  		return Buffer.byteLength(fileContent, 'utf8');
-  	}
+      return Buffer.byteLength(fileContent, 'utf8');
+    }
   };
-	callback();
+  callback();
 });
 ```
 
@@ -198,20 +198,21 @@ compiler.plugin('emit', (compilation, callback) => {
   asset.source();
   // 获取输出资源的文件大小
   asset.size();
-	callback();
+  callback();
 });
 ```
 
 ### 判断 Webpack 使用了哪些插件
 在开发一个插件时可能需要根据当前配置是否使用了其它某个插件而做下一步决定，因此需要读取 Webpack 当前的插件配置情况。
-以判断当前是否使用了 ExtractTextPlugin 为例，代码如下：
+以判断当前是否使用了 ExtractTextPlugin 为例，可以使用如下代码：
 ```js
-// 判断当前配置使用使用了 ExtractTextPlugin，compiler 即为 Webpack 在 apply(compiler) 中传入的参数
+// 判断当前配置使用使用了 ExtractTextPlugin，
+// compiler 参数即为 Webpack 在 apply(compiler) 中传入的参数
 function hasExtractTextPlugin(compiler) {
   // 当前配置所有使用的插件列表
-	const plugins = compiler.options.plugins;
-	// 去 plugins 中寻找有没有 ExtractTextPlugin 的实例
-	return plugins.find(plugin=>plugin.__proto__.constructor === ExtractTextPlugin) != null;
+  const plugins = compiler.options.plugins;
+  // 去 plugins 中寻找有没有 ExtractTextPlugin 的实例
+  return plugins.find(plugin=>plugin.__proto__.constructor === ExtractTextPlugin) != null;
 }
 ```
 
@@ -223,11 +224,11 @@ function hasExtractTextPlugin(compiler) {
 ```js
 module.exports = {
   plugins:[
-    // 在初始化 EndWebpackPlugin 时传入了两个参数，分别时在成功时的回调函数和失败时的回调函数；
+    // 在初始化 EndWebpackPlugin 时传入了两个参数，分别是在成功时的回调函数和失败时的回调函数；
     new EndWebpackPlugin(() => {
       // Webpack 构建成功，并且文件输出了后会执行到这里，在这里可以做发布文件操作
     }, (err) => {
-      // Webpack 构建失败，err 时导致错误的原因
+      // Webpack 构建失败，err 是导致错误的原因
       console.error(err);        
     })
   ]
@@ -263,5 +264,8 @@ class EndWebpackPlugin {
 // 导出插件 
 module.exports = EndWebpackPlugin;
 ```
+从开发这个插件可以看出，找到合适的事件点去完成功能在开发插件时显得尤为重要。
+在 [5-1工作原理概括](5-1工作原理概括.md) 中详细介绍过 Webpack 在运行过程中广播出常用事件，你可以从中找到你需要的事件。
+
 
 > 本实例[提供项目完整代码](https://github.com/gwuhaolin/end-webpack-plugin)
