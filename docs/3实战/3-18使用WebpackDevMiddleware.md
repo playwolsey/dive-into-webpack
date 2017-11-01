@@ -22,7 +22,7 @@ app.use(webpackMiddleware(compiler));
 app.listen(3000);
 ```
 从以上代码可以看出，从 `webpack-dev-middleware` 中导出的 `webpackMiddleware` 是一个函数，该函数需要接收一个 Compiler 实例。
-在 [3-18 通过 Node.js API 启动 Webpack](3-18通过Node.jsAPI启动Webpack.md) 中曾介绍过 Webpack API 导出的 `webpack` 函数会返回一个Compiler 实例。
+在 [3-17 通过 Node.js API 启动 Webpack](3-17通过Node.jsAPI启动Webpack.md) 中曾介绍过 Webpack API 导出的 `webpack` 函数会返回一个Compiler 实例。
 
 `webpackMiddleware` 函数的返回结果是一个 Expressjs 的中间件，该中间件有以下功能：
 
@@ -154,4 +154,4 @@ npm i -D webpack-dev-middleware webpack-hot-middleware express
 
 安装成功后，通过 `node ./server.js` 就能启动一个类似于支持模块热替换的服务了。
 
-> 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-19使用WebpackDevMiddleware.zip)
+> 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-18使用WebpackDevMiddleware.zip)
