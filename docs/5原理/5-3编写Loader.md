@@ -66,8 +66,8 @@ module.exports = function(source) {
 以上只是个最简单的 Loader，Webpack 还提供一些 API 供 Loader 调用，下面来一一介绍。
 
 ### 获得 Loader 的 options
-在最上面处理 SCSS 文件的 Loader Webpack 配置中，给 css-loader 传了 options，以控制 css-loader。
-如何在自己编写的 Loader 中获取到用户传入的 Loader 呢？需要这样做：
+在最上面处理 SCSS 文件的 Webpack 配置中，给 css-loader 传了 options，以控制 css-loader。
+如何在自己编写的 Loader 中获取到用户传入的 options 呢？需要这样做：
 ```js
 const loaderUtils = require('loader-utils');
 module.exports = function(source) {
@@ -86,7 +86,8 @@ module.exports = function(source) {
 module.exports = function(source) {
   // 通过 this.callback 告诉 Webpack 返回的结果
   this.callback(null, source, sourceMaps);
-  // 当你使用 this.callback 返回内容时，该 Loader 必须返回 undefined，以让 Webpack 知道该 Loader 返回的结果在 this.callback 中，而不是 return 中 
+  // 当你使用 this.callback 返回内容时，该 Loader 必须返回 undefined，
+  // 以让 Webpack 知道该 Loader 返回的结果在 this.callback 中，而不是 return 中 
   return;
 };
 ```
@@ -100,13 +101,15 @@ this.callback(
     content: string | Buffer,
     // 用于把转换后的内容得出原内容的 Source Map，方便调试
     sourceMap?: SourceMap,
-    // 如果本次转换为原内容生成了 AST 语法树，可以把这个 AST 返回，以方便之后的需要 AST 的 Loader 复用该 AST，以避免重复生成 AST，提升性能
+    // 如果本次转换为原内容生成了 AST 语法树，可以把这个 AST 返回，
+    // 以方便之后需要 AST 的 Loader 复用该 AST，以避免重复生成 AST，提升性能
     abstractSyntaxTree?: AST
 );
 ```
 
 > Source Map 的生成很耗时，通常在开发环境下才会生成 Source Map，其它环境下不用生成，以加速构建。
 > 为此 Webpack 为 Loader 提供了 `this.sourceMap` API 去告诉 Loader 当前构建环境下用户是否需要 Source Map。
+> 如果你编写的 Loader 会生成 Source Map，请考虑到这点。
 
 ### 同步与异步
 Loader 有同步和异步之分，上面介绍的 Loader 都是同步的 Loader，因为它们的转换流程都是同步的，转换完成后再返回结果。
@@ -115,7 +118,7 @@ Loader 有同步和异步之分，上面介绍的 Loader 都是同步的 Loader�
 在转换步骤是异步时，你可以这样：
 ```js
 module.exports = function(source) {
-    // 告诉 Webpack 本次转换是异步的，Loader 会在 callback 中回掉结果
+    // 告诉 Webpack 本次转换是异步的，Loader 会在 callback 中回调结果
     var callback = this.async();
     someAsyncOperation(source, function(err, result, sourceMaps, ast) {
         // 通过 callback 返回异步执行后的结果
@@ -201,7 +204,7 @@ module.exports = {
 如果还采取以上的方法去使用本地开发的 Loader 将会很麻烦，因为你需要确保编写的 Loader 的源码是在 `node_modules` 目录下。
 为此你需要先把编写的 Loader 发布到 Npm 仓库后再安装到本地项目使用。
 
-解决以上问题的便捷方法有两种，分布如下：
+解决以上问题的便捷方法有两种，分别如下：
 
 #### Npm link
 Npm link 专门用于开发和调试本地 Npm 模块，能做到在不发布模块的情况下，把本地的一个正在开发的模块的源码链接到项目的 `node_modules` 目录下，让项目可以直接使用本地的 Npm 模块。

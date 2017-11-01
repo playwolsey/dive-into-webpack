@@ -32,7 +32,7 @@ module.export = {
 
 Webpack 启动后，在读取配置的过程中会先执行 `new BasicPlugin(options)` 初始化一个 BasicPlugin 获得其实例。
 在初始化 compiler 对象后，再调用 `basicPlugin.apply(compiler)` 给插件实例传入 compiler 对象。
-插件实例在获取到 compiler 对象后，就可以通过 `compiler.plugin(事件名称, 回掉函数)` 监听到 Webpack 广播出来的事件。
+插件实例在获取到 compiler 对象后，就可以通过 `compiler.plugin(事件名称, 回调函数)` 监听到 Webpack 广播出来的事件。
 并且可以通过 compiler 对象去操作 Webpack。
 
 通过以上最简单的 Plugin 相信你大概明白了 Plugin 的工作原理，但实际开发中还有很多细节需要注意，下面来详细介绍。
@@ -83,7 +83,7 @@ compiler.plugin('event-name',function(params) {
 在开发插件时，还需要注意以下两点：
 - 只要能拿到 Compiler 或 Compilation 对象，就能广播出新的事件，所以在新开发的插件中也能广播出事件，给其它插件监听使用。
 - 传给每个插件的 Compiler 和 Compilation 对象都是同一个引用。也就是说在一个插件中修改了 Compiler 或 Compilation 对象上的属性，会影响到后面的插件。
-- 有些事件是异步的，这些事件会附带两个参数，第二个参数为回掉函数，在插件处理完任务时需要调用回掉函数通知 Webpack，才会进入下一处理流程。例如：
+- 有些事件是异步的，这些事件会附带两个参数，第二个参数为回调函数，在插件处理完任务时需要调用回调函数通知 Webpack，才会进入下一处理流程。例如：
     ```js
     compiler.plugin('emit',function(compilation, callback) {
       // 支持处理逻辑
@@ -223,7 +223,7 @@ function hasExtractTextPlugin(compiler) {
 ```js
 module.exports = {
   plugins:[
-    // 在初始化 EndWebpackPlugin 时传入了两个参数，分别时在成功时的回掉函数和失败时的回掉函数；
+    // 在初始化 EndWebpackPlugin 时传入了两个参数，分别时在成功时的回调函数和失败时的回调函数；
     new EndWebpackPlugin(() => {
       // Webpack 构建成功，并且文件输出了后会执行到这里，在这里可以做发布文件操作
     }, (err) => {
@@ -244,18 +244,18 @@ module.exports = {
 class EndWebpackPlugin {
 
     constructor(doneCallback, failCallback) {
-        // 存下在构造函数中传入的回掉函数
+        // 存下在构造函数中传入的回调函数
         this.doneCallback = doneCallback;
         this.failCallback = failCallback;
     }
 
     apply(compiler) {
         compiler.plugin('done', (stats) => {
-            // 在 done 事件中回掉 doneCallback
+            // 在 done 事件中回调 doneCallback
             this.doneCallback(stats);
         });
         compiler.plugin('failed', (err) => {
-            // 在 failed 事件中回掉 failCallback
+            // 在 failed 事件中回调 failCallback
             this.failCallback(err);
         });
     }

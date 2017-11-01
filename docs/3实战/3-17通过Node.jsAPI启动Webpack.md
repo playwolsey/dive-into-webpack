@@ -40,7 +40,7 @@ webpack(config , callback);
 ## 以监听模式运行
 以上使用 Webpack API 的方法只能执行一次构建，无法以监听模式启动 Webpack，为了在使用 API 时以监听模式启动，需要获取 Compiler 实例，方法如下：
 ```js
-// 如果不传 callback 回掉函数，就会返回一个 Compiler 实例，用于让你去启动，而不是像上面那样立即启动
+// 如果不传 callback 回调函数，就会返回一个 Compiler 实例，用于让你去启动，而不是像上面那样立即启动
 const compiler = webpack(config);
 
 // 调用 compiler.watch 以监听模式启动，返回的 watching 用于关闭监听
