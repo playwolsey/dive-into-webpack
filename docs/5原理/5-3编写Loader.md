@@ -1,4 +1,4 @@
-### 编写 Loader
+# 5-3 编写 Loader
 Loader 就像是一个翻译员，能把源文件经过转化后输出新的结果，并且一个文件还可以链式的经过多个翻译员翻译。
 
 以处理 SCSS 文件为例：
@@ -33,7 +33,7 @@ module.exports = {
 };
 ```
 
-#### Loader 的职责
+## Loader 的职责
 由上面的例子可以看出：一个 Loader 的职责是单一的，只需要完成一种转换。
 如果一个源文件需要经历多步转换才能正常使用，就通过多个 Loader 去转换。
 在调用多个 Loader 去转换一个文件时，每个 Loader 会链式的顺序执行，
@@ -41,7 +41,7 @@ module.exports = {
 
 所以，在你开发一个 Loader 时，请保持其职责的单一性，你只需关心输入和输出。
  
-#### Loader 基础
+## Loader 基础
 由于 Webpack 是运行在 Node.js 之上的，一个 Loader 其实就是一个 Node.js 模块，这个模块需要导出一个函数。
 这个导出的函数的工作就是获得处理前的原内容，对原内容执行处理后，返回处理后的内容。
 
@@ -62,10 +62,10 @@ module.exports = function(source) {
 };
 ```
 
-#### Loader 进阶
+## Loader 进阶
 以上只是个最简单的 Loader，Webpack 还提供一些 API 供 Loader 调用，下面来一一介绍。
 
-##### 获得 Loader 的 options
+### 获得 Loader 的 options
 在最上面处理 SCSS 文件的 Loader Webpack 配置中，给 css-loader 传了 options，以控制 css-loader。
 如何在自己编写的 Loader 中获取到用户传入的 Loader 呢？需要这样做：
 ```js
@@ -77,7 +77,7 @@ module.exports = function(source) {
 };
 ```
 
-##### 返回其它结果
+### 返回其它结果
 上面的 Loader 都只是返回了原内容转换后的内容，但有些场景下还需要返回除了内容之外的东西。
 
 例如以用 babel-loader 转换 ES6 代码为例，它还需要输出转换后的 ES5 代码对应的 Source Map，以方便调试源码。
@@ -108,7 +108,7 @@ this.callback(
 > Source Map 的生成很耗时，通常在开发环境下才会生成 Source Map，其它环境下不用生成，以加速构建。
 > 为此 Webpack 为 Loader 提供了 `this.sourceMap` API 去告诉 Loader 当前构建环境下用户是否需要 Source Map。
 
-##### 同步与异步
+### 同步与异步
 Loader 有同步和异步之分，上面介绍的 Loader 都是同步的 Loader，因为它们的转换流程都是同步的，转换完成后再返回结果。
 但在有些场景下转换的步骤只能是异步完成的，例如你需要通过网络请求才能得出结果，如果采用同步的方式网络请求就会阻塞整个构建，导致构建非常缓慢。
 
@@ -124,7 +124,7 @@ module.exports = function(source) {
 };
 ```
 
-##### 处理二进制数据
+### 处理二进制数据
 在默认的情况下，Webpack 传给 Loader 的原内容都是 UTF-8 格式编码的字符串。
 但有些场景下 Loader 不是处理文本文件的，而是处理二进制文件的，例如 file-loader，就需要 Webpack 给 Loader 传入二进制格式的数据。
 为此，你需要这样编写 Loader：
@@ -140,7 +140,7 @@ module.exports = function(source) {
 module.exports.raw = true;
 ```
 
-##### 缓存加速
+### 缓存加速
 在有些情况下，有些转换操作需要大量计算非常耗时，如果每次构建都重新执行重复的转换操作，构建将会变得非常缓慢。
 为此，Webpack 会默认缓存所有 Loader 的处理结果，也就是说在需要被处理的文件或者其依赖的文件没有发生变化时，
 是不会重新调用对应的 Loader 去执行转换操作的。
@@ -154,7 +154,7 @@ module.exports = function(source) {
 };
 ``` 
 
-#### 其它 Loader API
+## 其它 Loader API
 除了以上提到的在 Loader 中能调用的 Webpack API 外，还存在以下常用 API：
 
 - `this.context`：当前处理文件的所在目录，假如当前 Loader 处理的文件是 `/src/main.js`，则 `this.context` 就等于 `/src`。
@@ -183,7 +183,7 @@ module.exports = function(source) {
 其它没有提到的 API 可以去 [Webpack 官网](https://webpack.js.org/api/loaders/) 查看。 
 
 
-#### 加载本地 Loader
+## 加载本地 Loader
 在开发 Loader 的过程中，为了测试编写的 Loader 是否能正常工作，需要把它配置到 Webpack 中后，才可能会调用该 Loader。
 在前面的章节中，使用的 Loader 都是通过 Npm 安装的，要使用 Loader 时会直接使用 Loader 的名称，代码如下：
 ```js
@@ -203,7 +203,7 @@ module.exports = {
 
 解决以上问题的便捷方法有两种，分布如下：
 
-###### Npm link
+#### Npm link
 Npm link 专门用于开发和调试本地 Npm 模块，能做到在不发布模块的情况下，把本地的一个正在开发的模块的源码链接到项目的 `node_modules` 目录下，让项目可以直接使用本地的 Npm 模块。
 由于是通过软链接的方式实现的，编辑了本地的 Npm 模块代码，在项目项目中也能使用到编辑后的代码。
 
@@ -215,7 +215,7 @@ Npm link 专门用于开发和调试本地 Npm 模块，能做到在不发布模
 
 链接好 Loader 到项目后你就可以像使用一个真正的 Npm 模块一样使用本地的 Loader 了。
 
-###### ResolveLoader
+#### ResolveLoader
 在 [2-7其它配置项](../2配置/2-7其它配置项.md#ResolveLoader) 中曾介绍过 ResolveLoader 用于配置 Webpack 如何寻找 Loader。
 默认情况下只会去 `node_modules` 目录下寻找，为了让 Webpack 加载放在本地项目中的 Loader 需要修改 `resolveLoader.modules`。
 
@@ -231,7 +231,7 @@ module.exports = {
 加上以上配置后 Webpack 即会去 `node_modules` 项目下寻找 Loader，也会去 `./loaders/` 目录下寻找。
 
 
-#### 实战
+## 实战
 上面讲了许多理论，接下来从实际出发，来编写一个解决实际问题的 Loader。
 
 该 Loader 名叫 comment-require-loader，作用是把 JavaScript 代码中的注释语法

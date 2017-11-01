@@ -1,6 +1,6 @@
-### 使用 Prepack
+# 4-13 使用 Prepack
 
-#### 认识 Prepack
+## 认识 Prepack
 在前面的优化方法中提到了代码压缩和分块，这些都是在网络加载层面的优化，除此之外还可以优化代码在运行时的效率，[Prepack](https://prepack.io) 就是为此而生。
 
 Prepack 由 Facebook 开源，它采用较为激进的方法：在保持运行结果一致的情况下，改变源代码的运行逻辑，输出性能更高的 JavaScript 代码。
@@ -42,7 +42,7 @@ Prepack 的工作原理和流程大致如下：
 
 总之，现在把 Prepack 用于线上环境还为时过早。
 
-#### 接入 Webpack
+## 接入 Webpack
 Prepack 需要在 Webpack 输出最终的代码之前，对这些代码进行优化，就像 UglifyJS 那样。
 因此需要通过新接入一个插件来为 Webpack 接入 Prepack，幸运的是社区中已经有人做好了这个插件：[prepack-webpack-plugin](https://github.com/gajus/prepack-webpack-plugin)。
 

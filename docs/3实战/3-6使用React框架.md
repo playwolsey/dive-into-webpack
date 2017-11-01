@@ -1,6 +1,6 @@
-### 使用 React 框架
+# 3-6 使用 React 框架
 
-#### React 语法特征
+## React 语法特征
 使用了 React 项目的代码特征有 JSX 和 Class 语法，例如：
 ```jsx
 class Button extends Component {
@@ -22,7 +22,7 @@ return React.createElement('h1', null, 'Hello,Webpack')
 
 目前 Babel 和 TypeScript 都提供了对 React 语法的支持，下面分别来介绍如何在使用 Babel 或 TypeScript 的项目中接入 React 框架。
 
-#### React 与 Babel
+## React 与 Babel
 要在使用 Babel 的项目中接入 React 框架是很简单的，只需要加入 React 所依赖的 Presets [babel-preset-react](https://babeljs.io/docs/plugins/preset-react/)。
 接下来通过修改前面讲过的[3-1 使用 ES6 语言](3-1使用ES6语言.md)中的项目，为其接入 React 框架。
 
@@ -61,7 +61,7 @@ render(<Button/>, window.document.getElementById('app'));
 
 -----
 
-#### React 与 TypeScript
+## React 与 TypeScript
 TypeScript 相比于 Babel 的优点在于它原生支持 JSX 语法，你不需要重新安装新的依赖，只需修改一行配置。
 但 TypeScript 的不同在于：
 

@@ -1,10 +1,10 @@
-### 使用 Vue 框架
+# 3-7 使用 Vue 框架
 [Vue](https://cn.vuejs.org) 是一个渐进式的 MVVM 框架，相比于 React、Angular 它更灵活轻量。
 它不会强制性地内置一些功能和语法，你可以根据自己的需要一点点地添加功能。
 虽然采用 Vue 的项目能用可直接运行在浏览器环境里的代码编写，但为了方便编码大多数项目都会采用 Vue 官方的[单文件组件](https://cn.vuejs.org/v2/guide/single-file-components.html#介绍)的写法去编写项目。
 由于直接引用 Vue 是古老和成熟的做法，本书只专注于讲解如何用 Webpack 构建 Vue 单文件组件。
 
-#### 认识 Vue
+## 认识 Vue
 Vue 和 React 一样，它们都推崇组件化和由数据驱动视图的思想，视图和数据绑定在一起，数据改变视图会跟着改变，而无需直接操作视图。
 还是以前面的 `Hello,Webpack` 为例，来看下 Vue 版本的实现。
 
@@ -47,7 +47,7 @@ new Vue({
 ```
 入口文件创建一个 Vue 的根实例，在 ID 为 `app` 的 DOM 节点上渲染出上面定义的 `App` 组件。
 
-#### 接入 Webpack
+## 接入 Webpack
 目前最成熟和流行的开发 Vue 项目的方式是采用 ES6 加 Babel 转换，这和基本的采用 ES6 开发的项目很相似，差别在于要解析 `.vue` 格式的单文件组件。
 好在 Vue 官方提供了对应的 [vue-loader](https://vue-loader.vuejs.org/zh-cn/) 可以非常方便的完成单文件组件的转换。
 
@@ -79,7 +79,7 @@ npm i -D vue-loader css-loader vue-template-compiler
 
 > 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/3-7使用Vue框架Babel.zip)
 
-#### 使用 TypeScript 编写 Vue 应用
+## 使用 TypeScript 编写 Vue 应用
 从 Vue 2.5.0+ 版本开始，提供了对 TypeScript 的良好支持，使用 TypeScript 编写 Vue 是一个很好的选择，因为 TypeScript 能检查出一些潜在的错误。
 下面讲解如何用 Webpack 构建使用 TypeScript 编写的 Vue 应用。
 

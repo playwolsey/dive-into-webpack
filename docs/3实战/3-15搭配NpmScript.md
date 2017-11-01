@@ -1,6 +1,6 @@
-### 搭配 Npm Script
+# 3-15 搭配 Npm Script
 
-#### 认识 Npm Script
+## 认识 Npm Script
 [Npm Script](https://docs.npmjs.com/misc/scripts) 是一个任务执行者。
 Npm 是在安装 Node.js 时附带的包管理器，Npm Script 则是 Npm 内置的一个功能，允许在 `package.json` 文件里面使用 `scripts` 字段定义任务：
 ```json
@@ -31,7 +31,7 @@ Npm Script 能方便的解决这个问题，只需要在 `scripts` 字段里定�
 Npm Script 会先去项目目录下的 `node_modules` 中寻找有没有可执行的 `webpack` 文件，如果有就使用本地的，如果没有就使用全局的。
 所以现在执行 Webpack 构建只需要通过执行 `npm run build` 去实现。
 
-#### Webpack 为什么需要 Npm Script
+## Webpack 为什么需要 Npm Script
 Webpack 只是一个打包模块化代码的工具，并没有提供任何任务管理相关的功能。
 但在实际场景中通常不会是只通过执行 `webpack` 就能完成所有任务的，而是需要多个任务才能完成。
 

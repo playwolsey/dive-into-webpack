@@ -1,8 +1,8 @@
-### Module
+# 2-3 Module
 `module` 配置如何处理模块。
 
 
-#### 配置 Loader
+## 配置 Loader
 `rules` 配置模块的读取和解析规则，通常用来配置 Loader。其类型是一个数组，数组里每一项都描述了如何去处理部分文件。
 配置一项 `rules` 时大致通过以下方式：
 
@@ -77,7 +77,7 @@ use: [
 数组里的每项之间是**或**的关系，即符合数组中的任何一个就会被命中。
 
 
-#### noParse
+## noParse
 `noParse` 配置项可以让 Webpack 忽略对部分没采用模块化的文件的递归解析和处理，这样做的好处是能提高构建性能。
 原因是一些库例如 jQuery 、ChartJS 它们庞大又没有采用模块化标准，让 Webpack 去解析这些文件耗时又没有意义。
 
@@ -98,7 +98,7 @@ noParse: (content)=> {
 > 注意被忽略掉的文件里不应该包含 `import` 、 `require` 、 `define` 等模块化语句，不然会导致构建出的代码中包含无法在浏览器环境下执行的模块化语句。
 
 
-#### parser
+## parser
 因为 Webpack 是以模块化的 JavaScript 文件为入口，所以内置了对模块化 JavaScript 的解析功能，支持 `AMD CommonJS SystemJS ES6`。
 `parser` 属性可以更细粒度的配置哪些模块语法要解析哪些不解析，和 `noParse` 配置项的区别在于 `parser` 可以精确到语法层面，
 而 `noParse` 只能控制哪些文件不被解析。

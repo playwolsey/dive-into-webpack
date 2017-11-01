@@ -1,6 +1,6 @@
-### 使用 PostCSS
+# 3-5 使用 PostCSS
 
-#### 认识 PostCSS
+## 认识 PostCSS
 [PostCSS](http://postcss.org) 是一个 CSS 处理工具，和 SCSS 不同的地方在于它通过插件机制可以灵活的扩展其支持的特性，而不是像 SCSS 那样语法是固定的。
 PostCSS 的用处非常多，包括给 CSS 自动加前缀、使用下一代 CSS 语法等，目前越来越多的人开始用它，它很可能会成为 CSS 预处理器的最终赢家。
 
@@ -58,7 +58,7 @@ module.exports = {
 
 > 目前 Chrome 等现代浏览器已经能完全支持 cssnext 中的所有语法，也就是说按照 cssnext 语法写的 CSS 在不经过转换的情况下也能在浏览器中直接运行。 
 
-#### 接入 Webpack
+## 接入 Webpack
 虽然使用 PostCSS 后文件后缀还是 `.css` 但这些文件必须先交给 [postcss-loader](https://github.com/postcss/postcss-loader) 处理一遍后再交给 css-loader。
 
 接入 PostCSS 相关的 Webpack 配置如下：

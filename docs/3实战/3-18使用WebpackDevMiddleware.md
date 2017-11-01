@@ -1,4 +1,4 @@
-### 使用 Webpack Dev Middleware
+# 3-18 使用 Webpack Dev Middleware
 在 [1-6 使用 DevServer](../1入门/1-6使用DevServer.md) 中介绍过的 DevServer 是一个方便开发的小型 HTTP 服务器，
 DevServer 其实是基于 [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) 和 [Expressjs](https://expressjs.com) 实现的，
 而 webpack-dev-middleware 其实是 Expressjs 的一个中间件。
@@ -32,7 +32,7 @@ app.listen(3000);
 通过 webpack-dev-middleware 能够将 DevServer 集成到你现有的 HTTP 服务器中，让你现有的 HTTP 服务器能返回 Webpack 构建出的内容，而不是在开发时启动多个 HTTP 服务器。
 这特别适用于后端接口服务采用 Node.js 编写的项目。 
 
-#### Webpack Dev Middleware 支持的配置项
+## Webpack Dev Middleware 支持的配置项
 在 Node.js 中调用 webpack-dev-middleware 提供的 API 时，还可以给它传入一些配置项，方法如下：
 ```js
 // webpackMiddleware 函数的第二个参数为配置项
@@ -84,7 +84,7 @@ app.use(webpackMiddleware(compiler, {
 }));
 ```
 
-#### Webpack Dev Middleware 与模块热替换
+## Webpack Dev Middleware 与模块热替换
 DevServer 提供了一个方便的功能，可以做到在监听到文件发生变化时自动替换网页中的老模块，以做到实时预览。
 DevServer 虽然是基于 webpack-dev-middleware 实现的，但 webpack-dev-middleware 并没有实现模块热替换功能，而是 DevServer 自己实现了该功能。
 

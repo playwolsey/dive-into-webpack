@@ -1,6 +1,6 @@
-### 使用 Angular2 框架
+# 3-8 使用 Angular2 框架
 
-#### 认识 Angular2
+## 认识 Angular2
 [Angular2](https://angular.io) 是 [AngularJS](https://angularjs.org) 的下一个版本，它继承了 AngularJS 中的部分思想又加入了一些新的改进。
 Angular2 相比于 React 和 Vue 来说要复杂很多，这三者的出发点都是组件化和数据驱动视图，但 Angular2 多出了这些思想：
 
@@ -90,7 +90,7 @@ npm i -S @angular/platform-browser-dynamic @angular/compiler
 ```
 以上是一个最小的能正常运行的 Angular2 应用，可见 Angular2 依赖很多，使用繁杂。
 
-#### 接入 Webpack
+## 接入 Webpack
 由于 Angular2 应用采用 TypeScript 开发，构建和前面讲过的[(3.2 使用 TypeScript 语言](3-2使用TypeScript语言.md) 类似，不同在于 `tsconfig.json` 配置。
 由于 Angular2 项目中采用了注解的语法，而且 `@angular/platform-browser` 源码中有许多 DOM 操作，配置需要修改为如下：
 ```json

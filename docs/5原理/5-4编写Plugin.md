@@ -1,4 +1,4 @@
-### 编写 Plugin
+# 5-4 编写 Plugin
 Webpack 通过 Plugin 机制让其更加灵活，以适应各种应用场景。
 在 Webpack 运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。
 
@@ -37,7 +37,7 @@ Webpack 启动后，在读取配置的过程中会先执行 `new BasicPlugin(opt
 
 通过以上最简单的 Plugin 相信你大概明白了 Plugin 的工作原理，但实际开发中还有很多细节需要注意，下面来详细介绍。
 
-#### Compiler 和 Compilation
+## Compiler 和 Compilation
 在开发 Plugin 时最常用的两个对象就是 Compiler 和 Compilation，它们是 Plugin 和 Webpack 之间的桥梁。
 Compiler 和 Compilation 的含义如下：
 
@@ -47,7 +47,7 @@ Compiler 和 Compilation 的含义如下：
 Compiler 和 Compilation 的区别在于：Compiler 代表了整个 Webpack 从启动到关闭的生命周期，而 Compilation 只是代表了一次新的编译。   
 
 
-#### 事件流
+## 事件流
 Webpack 就像一条生产线，要尽量一系列处理流程后才能将源文件转换成输出结果。
 这条生产线上的每个处理流程的职责都是单一的，多个流程之间有存在依赖关系，只有完成当前处理后才能交给下一个流程去处理。
 插件就像是一个插入到生成线中的一个功能，在特定的步骤对生产线上的资源做处理。
@@ -94,11 +94,11 @@ compiler.plugin('event-name',function(params) {
     ```
 
 
-#### 常用 API
+## 常用 API
 插件可以用来修改输出文件、增加输出文件、甚至可以提升 Webpack 性能、等等，总之插件通过调用 Webpack 提供的 API 能完成很多事情。
 由于 Webpack 提供的 API 非常多，有很多 API 很少用的上，又加上篇幅有限，下面来介绍一些常用的 API。
 
-##### 读取输出资源、代码块、模块及其依赖
+### 读取输出资源、代码块、模块及其依赖
 有些插件可能需要读取 Webpack 的处理结果，例如输出资源、代码块、模块及其依赖，以便做下一步处理。
 
 在 `emit` 事件发生时，代表源文件的转换和组装已经完成，在这里可以读取到输出资源、代码块、模块及其依赖，并且可以修改输出资源的内容。
@@ -135,7 +135,7 @@ class Plugin {
 }
 ```
 
-##### 监听文件变化
+### 监听文件变化
 在[4-5使用自动刷新](../4优化/4-5使用自动刷新.md) 中介绍过 Webpack 会从配置的入口模块出发，依次找出所有的依赖模块，当入口模块或者其依赖的模块发生变化时，
 就会触发一次新的 Compilation。
 
@@ -164,7 +164,7 @@ compiler.plugin('after-compile', (compilation, callback) => {
 });
 ```
 
-##### 修改输出资源
+### 修改输出资源
 有些场景下插件需要修改、增加、删除输出的资源，要做到这点需要监听 `emit` 事件，因为发生 `emit` 事件时所有模块的转换和代码块对应的文件已经生成好，
 需要输出的资源即将输出，因此 `emit` 事件是修改 Webpack 输出资源的最后机遇。
 
@@ -202,7 +202,7 @@ compiler.plugin('emit', (compilation, callback) => {
 });
 ```
 
-##### 判断 Webpack 使用了哪些插件
+### 判断 Webpack 使用了哪些插件
 在开发一个插件时可能需要根据当前配置是否使用了其它某个插件而做下一步决定，因此需要读取 Webpack 当前的插件配置情况。
 以判断当前是否使用了 ExtractTextPlugin 为例，代码如下：
 ```js
@@ -215,7 +215,7 @@ function hasExtractTextPlugin(compiler) {
 }
 ```
 
-#### 实战
+## 实战
 下面我们举一个实际的例子，带你一步步去实现一个插件。
 
 该插件的名称取名叫 EndWebpackPlugin，作用是在 Webpack 即将退出时再附加一些额外的操作，例如在 Webpack 成功编译和输出了文件后执行发布操作把输出的文件上传到服务器。

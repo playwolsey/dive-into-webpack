@@ -1,6 +1,6 @@
-### 使用 Flow 检查器
+# 3-3 使用 Flow 检查器
 
-#### 认识 Flow
+## 认识 Flow
 [Flow](https://flow.org) 是一个 Facebook 开源的 JavaScript 静态类型检测器，它是 JavaScript 语言的超集。
 你所需要做的就是在需要的地方加上类型检查，例如在两个由不同人开发的模块对接的接口出加上静态类型检查，能在编译阶段就指出部分模块使用不当的问题。
 同时 Flow 也能通过类型推断检查出 JavaScript 代码中潜在的 Bug。
@@ -23,7 +23,7 @@ square2('2');
 ```
 > 需要注意的时代码中的第一行 `// @flow` 告诉 Flow 检查器这个文件需要被检查。
 
-#### 使用 Flow
+## 使用 Flow
 以上只是让你了解 Flow 的功能，下面教你任何运行 Flow 去检查代码。
 Flow 检测器由高性能跨平台的 [OCaml](http://ocaml.org) 语言编写，它的可执行文件可以通过
 ```bash
@@ -66,7 +66,7 @@ function foo(one, two, three) {}
 1. [flow-remove-types](https://github.com/flowtype/flow-remove-types) 可单独使用，速度快。
 2. [babel-preset-flow](https://babeljs.io/docs/plugins/preset-flow/) 与 Babel 集成。
 
-#### 集成 Webpack
+## 集成 Webpack
 由于使用了 Flow 项目一般都会使用 ES6 语法，所以把 Flow 集成到使用 Webpack 构建的项目里最方便的方法是借助 Babel，下面来修改前面讲过的[3-1 使用 ES6 语言](3-1使用ES6语言.md)，为其加入 Flow 代码检查。
 改动很少，如下：
 

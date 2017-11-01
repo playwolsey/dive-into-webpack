@@ -1,8 +1,8 @@
-### Resolve
+# 2-4 Resolve
 Webpack 在启动后会从配置的入口模块出发找出所有依赖的模块，Resolve 配置 Webpack 如何寻找模块所对应的文件。
 Webpack 内置 JavaScript 模块化语法解析功能，默认会采用模块化标准里约定好的规则去寻找，但你也可以根据自己的需要修改默认的规则。
 
-#### alias
+## alias
 `resolve.alias` 配置项通过别名来把原导入路径映射成一个新的导入路径。例如使用以下配置：
 ```js
 // Webpack alias 配置
@@ -27,7 +27,7 @@ resolve:{
 `react$` 只会命中以 `react` 结尾的导入语句，即只会把 `import 'react'` 关键字替换成 `import '/path/to/react.min.js'`。
 
 
-#### mainFields
+## mainFields
 有一些第三方模块会针对不同环境提供几分代码。
 例如分别提供采用 ES5 和 ES6 的2份代码，这2份代码的位置写在 `package.json` 文件里，如下：
 ```json
@@ -48,7 +48,7 @@ mainFields: ['jsnext:main', 'browser', 'main']
 ```
 
 
-#### extensions
+## extensions
 在导入语句没带文件后缀时，Webpack 会自动带上后缀后去尝试访问文件是否存在。
 `resolve.extensions` 用于配置在尝试过程中用到的后缀列表，默认是：
 ```js
@@ -63,7 +63,7 @@ extensions: ['.ts', '.js', '.json']
 ``` 
 
 
-#### modules
+## modules
 `resolve.modules` 配置 Webpack 去哪些目录下寻找第三方模块，默认是只会去 `node_modules` 目录下寻找。
 有时你的项目里会有一些模块会大量被其它模块依赖和导入，由于其它模块的位置分布不定，针对不同的文件都要去计算被导入模块文件的相对路径，
 这个路径有时候会很长，就像这样 `import '../../../components/button'`
@@ -74,19 +74,19 @@ modules:['./src/components','node_modules']
 后，你可以简单通过 `import 'button'` 导入。
 
 
-#### descriptionFiles
+## descriptionFiles
 `resolve.descriptionFiles` 配置描述第三方模块的文件名称，也就是 `package.json` 文件。默认如下：
 ```js
 descriptionFiles: ['package.json']
 ```
 
 
-#### enforceExtension
+## enforceExtension
 `resolve.enforceExtension` 如果配置为 `true` 所有导入语句都必须要带文件后缀，
 例如开启前 `import './foo'` 能正常工作，开启后就必须写成 `import './foo.js'`。
 
 
-#### enforceModuleExtension
+## enforceModuleExtension
 `enforceModuleExtension` 和 `enforceExtension` 作用类似，但 `enforceModuleExtension` 只对 `node_modules` 下的模块生效。
 `enforceModuleExtension` 通常搭配 `enforceExtension` 使用，在 `enforceExtension:true` 时，因为安装的第三方模块中大多数导入语句没带文件后缀，
 所以这时通过配置 `enforceModuleExtension:false` 来兼容第三方模块。

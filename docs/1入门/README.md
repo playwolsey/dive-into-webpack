@@ -1,4 +1,4 @@
-# 入门
+# 1 入门
 本章带你入门当下最流行的前端构建工具 [Webpack](https://webpack.js.org)。
 
 学习 Webpack 前需要先知道为什么需要它：

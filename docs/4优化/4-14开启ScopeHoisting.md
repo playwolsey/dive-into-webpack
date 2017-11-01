@@ -1,9 +1,9 @@
-### 开启 Scope Hoisting
+# 4-14 开启 Scope Hoisting
 Scope Hoisting 可以让 Webpack 打包出来的代码文件更小、运行的更快，
 它又译作 "作用域提升"，是在 Webpack3 中新推出的功能。
 单从名字上看不出 Scope Hoisting 到底做了什么，下面来详细介绍它。
 
-#### 认识 Scope Hoisting
+## 认识 Scope Hoisting
 让我们先来看看在没有 Scope Hoisting 之前 Webpack 的打包方式。
 
 假如现在有两个文件分别是 `util.js`:
@@ -50,7 +50,7 @@ Scope Hoisting 的实现原理其实很简单：分析出模块之间的依赖�
 由于 Scope Hoisting 需要分析出模块之间的依赖关系，因此源码必须采用 ES6 模块化语句，不然它将无法生效。
 原因和[4-10 使用 TreeSharking](4-10使用TreeSharking.md) 中介绍的类似。
 
-#### 使用 Scope Hoisting
+## 使用 Scope Hoisting
 要在 Webpack 中使用 Scope Hoisting 非常简单，因为这是 Webpack 内置的功能，只需要配置一个插件，相关代码如下：
 ```js
 const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');

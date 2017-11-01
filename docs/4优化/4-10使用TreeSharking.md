@@ -1,6 +1,6 @@
-### 使用 Tree Sharking
+# 4-10 使用 Tree Sharking
 
-#### 认识 Tree Sharking
+## 认识 Tree Sharking
 Tree Sharking 可以用来剔除 JavaScript 中用不上的死代码。它依赖静态的 ES6 模块化语法，例如通过 `import` 和 `export` 导入导出。
 Tree Sharking 最先在 Rollup 中出现，Webpack 在 2.0 版本中将其引入。
 
@@ -32,7 +32,7 @@ export function funcA() {
 因为 ES6 模块化语法是静态的（导入导出语句中的路径必须是静态的字符串，而且不能放入其它代码块中），这让 Webpack 可以简单的分析出哪些 `export` 的被 `import` 过了。
 如果你采用 ES5 中的模块化，例如 `module.export={...}`、`require(x+y)`、`if(x){require('./util')}`，Webpack 无法分析出哪些代码可以剔除。
  
-#### 接入 Tree Sharking
+## 接入 Tree Sharking
 上面讲了 Tree Sharking 是做什么的，接下来一步步教你如何配置 Webpack 让 Tree Sharking 生效。
 
 首先，为了把采用 ES6 模块化的代码交给 Webpack，需要配置 Babel 让其保留 ES6 模块化语句，修改 `.babelrc` 文件为如下：
@@ -130,5 +130,3 @@ module.exports = {
 以让 Tree Sharking 发挥更大的优化效果，让更多的人为此受益。
 
 > 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/4-10使用TreeSharking.zip)
-
-@ TODO Tree sharking TypeScript

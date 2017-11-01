@@ -1,6 +1,6 @@
-### 使用 SCSS 语言
+# 3-4 使用 SCSS 语言
 
-#### 认识 SCSS
+## 认识 SCSS
 [SCSS](http://sass-lang.com) 可以让你用更灵活的方式写 CSS。
 它是一种 CSS 预处理器，语法和 CSS 相似，但加入了变量、逻辑、等编程元素，代码类似这样：
 ```scss
@@ -29,7 +29,7 @@ node-sass main.scss main.css
 ```
 你就能在源码同目录下看到编译后的 `main.css` 文件。
 
-#### 接入 Webpack
+## 接入 Webpack
 由于需要把 SCSS 源代码转换成 CSS 代码，在[1-4 使用Loader](../1入门/1-4使用Loader.md)中曾介绍过转换文件最适合的方式是使用 Loader，Webpack 官方提供了对应的 [sass-loader](https://github.com/webpack-contrib/sass-loader)。
 
 Webpack 接入 sass-loader 相关配置如下：

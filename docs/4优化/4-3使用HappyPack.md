@@ -1,4 +1,4 @@
-### 使用 HappyPack
+# 4-3 使用 HappyPack
 由于有大量文件需要解析和处理，构建是文件读写和计算密集型的操作，特别是当文件数量变多后，Webpack 构建慢的问题会显得严重。
 运行在 Node.js 之上的 Webpack 是单线程模型的，也就是说 Webpack 需要处理的任务需要一件件挨着做，不能多个事情一起做。
 
@@ -8,7 +8,7 @@
 
 > 由于 JavaScript 是单线程模型，要想发挥多核 CPU 的能力，只能通过多进程去实现，而无法通过多线程实现。
 
-#### 使用 HappyPack
+## 使用 HappyPack
 分解任务和管理线程的事情 HappyPack 都会帮你做好，你所需要做的只是接入 HappyPack。
 接入 HappyPack 的相关代码如下：
 ```js
@@ -109,7 +109,7 @@ Happy[css]: All set; signaling webpack to proceed.
 
 > 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/4-3使用HappyPack.zip)
 
-#### HappyPack 原理
+## HappyPack 原理
 在整个 Webpack 构建流程中，最耗时的流程可能就是 Loader 对文件的转换操作了，因为要转换的文件数据巨多，而且这些转换操作都只能一个个挨着处理。
 HappyPack 的核心原理就是把这部分任务分解到多个进程去并行处理，从而减少了总的构建时间。
 

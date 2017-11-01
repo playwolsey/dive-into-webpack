@@ -1,4 +1,4 @@
-### 使用 ParallelUglifyPlugin
+# 4-4 使用 ParallelUglifyPlugin
 在使用 Webpack 构建出用于发布到线上的代码时，都会有压缩代码这一流程。
 最常见的 JavaScript 代码压缩工具是 [UglifyJS](https://github.com/mishoo/UglifyJS2)，并且 Webpack 也内置了它。
 

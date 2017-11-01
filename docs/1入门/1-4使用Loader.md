@@ -1,4 +1,4 @@
-### 使用 Loader
+# 1-4 使用 Loader
 在上一节中使用 Webpack 构建了一个采用 CommonJS 规范的模块化项目，本节将继续优化这个网页的 UI，为项目引入 CSS 代码让文字居中显示，`main.css` 的内容如下：
 ```css
 #app{
