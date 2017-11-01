@@ -209,7 +209,7 @@ module.exports = {
 
 #### Npm link
 Npm link 专门用于开发和调试本地 Npm 模块，能做到在不发布模块的情况下，把本地的一个正在开发的模块的源码链接到项目的 `node_modules` 目录下，让项目可以直接使用本地的 Npm 模块。
-由于是通过软链接的方式实现的，编辑了本地的 Npm 模块代码，在项目项目中也能使用到编辑后的代码。
+由于是通过软链接的方式实现的，编辑了本地的 Npm 模块代码，在项目中也能使用到编辑后的代码。
 
 完成 Npm link 的步骤如下：
 
@@ -227,12 +227,12 @@ Npm link 专门用于开发和调试本地 Npm 模块，能做到在不发布模
 ```js
 module.exports = {
   resolveLoader:{
-    // 去哪个目录下寻找 Loader
+    // 去哪些目录下寻找 Loader，有先后顺序之分
     modules: ['node_modules','./loaders/'],
   }
 }
 ```
-加上以上配置后 Webpack 即会去 `node_modules` 项目下寻找 Loader，也会去 `./loaders/` 目录下寻找。
+加上以上配置后， Webpack 会先去 `node_modules` 项目下寻找 Loader，如果找不到，会再去 `./loaders/` 目录下寻找。
 
 
 ## 实战
@@ -246,7 +246,7 @@ module.exports = {
 ```js
 require('../style/index.css');
 ```
-该 Loader 的使用场景是去正确加载针对 [Fis3](http://fis.baidu.com/fis3/docs/user-dev/require.html) 编写的 JavaScript 中通过注释加载 CSS 文件。
+该 Loader 的使用场景是去正确加载针对 [Fis3](http://fis.baidu.com/fis3/docs/user-dev/require.html) 编写的 JavaScript，这些 JavaScript 中存在通过注释的方式加载依赖的 CSS 文件。
 
 该 Loader 的使用方法如下：
 ```js
@@ -256,7 +256,7 @@ module.exports = {
       {
         test: /\.js$/,
         loaders: ['comment-require-loader'],
-        // 针对采用了 fis3 CSS 导入语法的 JavaScript 通过 comment-require-loader 去转换 
+        // 针对采用了 fis3 CSS 导入语法的 JavaScript 文件通过 comment-require-loader 去转换 
         include: [path.resolve(__dirname, 'node_modules/imui')]
       }
     ]
