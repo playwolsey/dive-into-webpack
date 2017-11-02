@@ -4,6 +4,7 @@
   "gitbook": "^3.2.3",
   "scripts": {
     "book": "gitbook build",
-    "build": "node build.js"
+    "build": "node build.js",
+    "pdf": "gitbook pdf . _book/dive-into-webpack.pdf && gitbook epub . _book/dive-into-webpack.epub && gitbook mobi . _book/dive-into-webpack.mobi"
   }
 }

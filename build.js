@@ -68,6 +68,10 @@ iterateDocs((mdPath, mdContent) => {
     }
     return `[${p1}](${p2})`;
   });
+
+  // 过滤掉 if 里的
+  mdContent = mdContent.replace(/{% if true %}([\s\S\r\n]+){% endif %}/g, '');
+
   mdAllInOne += mdContent + '\n';
 });
 
