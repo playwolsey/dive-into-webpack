@@ -35,4 +35,5 @@ Webstorm 集成了 Node.js 的调试工具，因此使用 Webstorm 调试 Webpac
 ![图5-5-4 执行到断点](img/5-5执行到断点.png)
 
 > VSCode 的断点调试方法和 Webstorm 很类似，这里就不重复介绍。
+> 
 > 除了以上调试方法外，你还可以通过 Node.js 自带的 [ Debugger](https://nodejs.org/api/debugger.html) 断点调试。
