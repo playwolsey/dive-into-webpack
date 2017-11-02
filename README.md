@@ -6,8 +6,6 @@
   <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/3bvxELAxnq8r4wheFyRkED8U/gwuhaolin/dive-into-webpack.svg' />
 </a>
 
-(本书正在书写中，还未完成...)
-
 ## 版权许可
 电子工业出版社持有本书全媒体形式的出版发行权利。
 
