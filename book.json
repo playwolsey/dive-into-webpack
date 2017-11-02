@@ -8,7 +8,8 @@
   "plugins": [
     "github",
     "edit-link",
-    "disqus"
+    "disqus",
+    "ga"
   ],
   "pluginsConfig": {
     "github": {
@@ -26,6 +27,9 @@
       "twitter": false,
       "facebook": false,
       "google": false
+    },
+    "ga": {
+      "token": "UA-54964850-3"
     }
   }
 }
