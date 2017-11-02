@@ -1,6 +1,6 @@
 # 5-5 调试 Webpack
 在编写 Webpack 的 Plugin 和 Loader 时，可能执行结果会和你预期的不一样，就和你平时写代码遇到了奇怪的 Bug 一样。
-对应无法一眼看出问题的 Bug，通常需要调试程序才能找出问题所在。
+对于无法一眼看出问题的 Bug，通常需要调试程序源码才能找出问题所在。
 
 虽然可以通过 `console.log` 的方式完成调试，但这种方法非常不方便也不优雅，本节将教你如何断点调试 [5-1工作原理概括](http://webpack.wuhaolin.cn/5-1工作原理概括.zip) 中的插件代码。
 由于 Webpack 运行在 Node.js 之上，调试 Webpack 就相对于调试 Node.js 程序。
@@ -34,4 +34,5 @@ Webstorm 集成了 Node.js 的调试工具，因此使用 Webstorm 调试 Webpac
 
 ![图5-5-4 执行到断点](img/5-5执行到断点.png)
 
-
+> VSCode 的断点调试方法和 Webstorm 很类似，这里就不重复介绍。
+> 除了以上调试方法外，你还可以通过 Node.js 自带的 [ Debugger](https://nodejs.org/api/debugger.html) 断点调试。
