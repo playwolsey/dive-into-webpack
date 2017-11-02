@@ -1,5 +1,5 @@
 # 3-21 加载 Source Map
-由于在开发过程中经常会使用新语言去开发项目，最后又把源码转换成能在浏览器中直接运行的 JavaScript 代码。
+由于在开发过程中经常会使用新语言去开发项目，最后会把源码转换成能在浏览器中直接运行的 JavaScript 代码。
 这样做虽能提升开发效率，在调试代码的过程中你会发现生成的代码可读性非常差，这给代码调试带来了不便。
 
 Webpack 支持为转换生成的代码输出对应的 Source Map 文件，以方便在浏览器中能通过源码调试。
@@ -28,11 +28,9 @@ Webpack 支持为转换生成的代码输出对应的 Source Map 文件，以方
 - cheap：生成的 Source Map 中不会包含列信息，这样计算量更小，输出的 Source Map 文件更小；同时来自 Loader 的 Source Map 不会使用；
 - module：来自 Loader 的 Source Map 被简单处理成每行一个模块；
 
-以上的介绍很抽象，你可能无法明白其含义，让我们来看看不同模式下的具体输出。
-
 
 ## 该如何选择
-一个简单的 Devtool 配置项，提供了这么多选项，但很多人搞不清楚它们之间的差别和应用场景。
+Devtool 配置项提供的这么多选项看似简单，但很多人搞不清楚它们之间的差别和应用场景。
 
 如果你不关心细节和性能，只是想在不出任何差错的情况下调试源码，可以直接设置成 `source-map`，但这样会造成两个问题：
 
@@ -41,12 +39,12 @@ Webpack 支持为转换生成的代码输出对应的 Source Map 文件，以方
 
 为了解决以上两个问题，可以这样做：
 
-- 在开发环境下把 `devtool` 设置成 `cheap-module-eval-source-map`，因为生成这种 Source Map 的速度最快，能加速构建。在开发环境下不会做代码压缩即，Source Map 中即使没有列信息也不会影响断点调试；
+- 在开发环境下把 `devtool` 设置成 `cheap-module-eval-source-map`，因为生成这种 Source Map 的速度最快，能加速构建。由于在开发环境下不会做代码压缩，Source Map 中即使没有列信息也不会影响断点调试；
 - 在生产环境下把 `devtool` 设置成 `hidden-source-map`，意思是生成最详细的 Source Map，但不会把 Source Map 暴露出去。由于在生产环境下会做代码压缩，一个 JavaScript 文件只有一行，所以需要列信息。
 
-> 在生产环境下通常不会把 Source Map 上传到 HTTP 服务器让用户获取，而是上传到 JavaScript 错误收集系统，在错误收集系统上根据 Source Map 和收集到的 JavaScript 运行错误堆栈技术出错误所在源码的位置。
+> 在生产环境下通常不会把 Source Map 上传到 HTTP 服务器让用户获取，而是上传到 JavaScript 错误收集系统，在错误收集系统上根据 Source Map 和收集到的 JavaScript 运行错误堆栈计算出错误所在源码的位置。
 > 
-> 不要在生产环境下使用 `inline` 模式的 Source Map， 因为这会使 JavaScript 文件变得很大。 
+> 不要在生产环境下使用 `inline` 模式的 Source Map， 因为这会使 JavaScript 文件变得很大，而且会泄露源码。
 
 
 ## 加载现有的 Source Map

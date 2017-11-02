@@ -1,8 +1,8 @@
 # 3-17 通过 Node.js API 启动 Webpack
-Webpack 处理提供可执行的命令行工具外，还提供可在 Node.js 环境中调用的库。
-提供 Webpack 暴露的 API，可直接在 Node.js 程序中调用 Webpack 执行构建。
+Webpack 除了提供可执行的命令行工具外，还提供可在 Node.js 环境中调用的库。
+通过 Webpack 暴露的 API，可直接在 Node.js 程序中调用 Webpack 执行构建。
 
-通过 API 去调用并执行 Webpack 比直接通过可执行文件启动根据灵活，可用在一些特殊场景，下面将教你如何使用 Webpack 提供的 API。
+通过 API 去调用并执行 Webpack 比直接通过可执行文件启动更加灵活，可用在一些特殊场景，下面将教你如何使用 Webpack 提供的 API。
 
 > Webpack 其实是一个 Node.js 应用程序，它全部通过 JavaScript 开发完成。
 > 在命令行中执行 `webpack` 命令其实等价于执行 `node ./node_modules/webpack/bin/webpack.js`。
@@ -22,7 +22,7 @@ import webpack from "webpack";
 导出的 `webpack` 其实是一个函数，使用方法如下：
 ```js
 webpack({
-  // Webpack 配，和 webpack.config.js 文件一致
+  // Webpack 配置，和 webpack.config.js 文件一致
 }, (err, stats) => {
   if (err || stats.hasErrors()) {
     // 构建过程出错
@@ -40,7 +40,7 @@ webpack(config , callback);
 ## 以监听模式运行
 以上使用 Webpack API 的方法只能执行一次构建，无法以监听模式启动 Webpack，为了在使用 API 时以监听模式启动，需要获取 Compiler 实例，方法如下：
 ```js
-// 如果不传 callback 回调函数，就会返回一个 Compiler 实例，用于让你去启动，而不是像上面那样立即启动
+// 如果不传 callback 回调函数，就会返回一个 Compiler 实例，用于让你去控制启动，而不是像上面那样立即启动
 const compiler = webpack(config);
 
 // 调用 compiler.watch 以监听模式启动，返回的 watching 用于关闭监听
